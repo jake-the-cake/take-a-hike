@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Permanent+Marker&display=swap');
+
 .titlebar__container {
   width: 100%;
-  height: 220px;
+  height: 170px;
   background-color: #376937;
   padding: 1rem;
   display: flex;
@@ -11,6 +13,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  margin-top: -60px;
 }
 
 .titlebar__logo--tree {
@@ -38,10 +41,37 @@
   width:5px;
   height:10px;
   background-color: #732a18;
+  box-shadow: inset 0px 0px 1px 0px rgba(255,255,255,.5);
 }
 
 .tri {
   width: 0px;
   height:0px;
   box-shadow: 0 5px 2px -5px #ededed;
+}
+
+.tree2 {
+  margin-left: -25px;
+  margin-top: 23px;
+}
+
+.titlebar__logo--title {
+  display: flex;
+  flex-direction: column;
+  color: #ededed;
+  align-items: end;
+  margin-left: -100px;
+  margin-top: 65px;
+  text-shadow: -01px 1px 4px #732a18;
+}
+
+.logo-title-top {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 2rem;
+  text-align: right;
+}
+
+.logo-title-bottom {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 3rem;
 }
