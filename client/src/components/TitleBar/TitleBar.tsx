@@ -1,7 +1,7 @@
 import React from 'react';
 import './TitleBar.css'
 
-export default () => {
+export const TitleBar = () => {
   return (
     <div className='titlebar__container'>
       <div className="titlebar__logo--box">

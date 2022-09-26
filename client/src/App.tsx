@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Routes, Route, Navigate } from 'react-router-dom'
-import TitleBar from './components/TitleBar/TitleBar';
+import { TitleBar } from './components/TitleBar/TitleBar';
+import { Home } from './pages/Home';
 
 
 /* 
@@ -34,6 +35,9 @@ function App() {
   return (
     <div className="App">
       <TitleBar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
     </div>
   );
 }
