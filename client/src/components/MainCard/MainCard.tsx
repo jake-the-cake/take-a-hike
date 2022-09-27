@@ -3,16 +3,25 @@ import './MainCard.css'
 interface MainCardProps {
   (
     props: {
-      content: JSX.Element
+      content: JSX.Element,
+      title?: string,
+      subtitle?: string
     }
   ): JSX.Element
 }
 
-export const MainCard: MainCardProps = ({ content }) => {
+export const MainCard: MainCardProps = ({ content, title, subtitle }) => {
   return (
     <div className="maincard__container">
+      {
+        ( title || subtitle ) && (
+          <div className='maincard__header'>
+            { title }
+          </div>
+        )
+      }
+
       <span>{ content }</span>
-      <span>stuff</span>
     </div>
   )
 }

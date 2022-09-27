@@ -7,10 +7,11 @@ interface HomeProps {
 export const Home: HomeProps = () => {
   return (
     <MainCard
+      title="page title"
       content={
-        <>
-          Go through the card
-        </>
+        <div>
+          ?
+        </div>
       }
     />
   )
