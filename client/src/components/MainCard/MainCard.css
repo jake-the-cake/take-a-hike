@@ -3,6 +3,7 @@
   width: 95vw;
   background-color: rgb(255 255 255 / .7);
   display: flex;
+  padding-bottom: 1rem;
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
@@ -13,4 +14,46 @@
   background-color: rgb(37 137 37 / .6);
   padding: .2rem 1rem;
   font-size: .8rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.maincard__history--link {
+  color: #eded69;
+}
+
+.maincard__history--divider {
+  color: #376937;
+}
+
+.maincard__header {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: 0 1rem;
+}
+
+.maincard__header--title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.maincard__header--subtitle {
+  color: #373737;
+}
+
+.maincard__content {
+  display:  flex;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.maincard__content--main {
+  flex: 1;
+}
+
+.maincard__content--side {
+  width: 200px;
+  background-color: red;
 }

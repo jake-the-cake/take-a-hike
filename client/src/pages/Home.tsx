@@ -20,6 +20,9 @@ export const Home: HomeProps = () => {
         <FakeComponent />,
         <FakeComponent />
       ]}
+      history={[
+        'Home',
+      ]}
     />
   )
 }
