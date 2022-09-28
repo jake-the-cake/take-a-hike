@@ -1,4 +1,5 @@
 import { MainCard } from "../components/MainCard/MainCard"
+import { findHikesPage, homePage } from "../objects/navHistoryObjects"
 import { findAHikeWidget } from "../objects/sideComponentObjects"
 
 export const Find = () => {
@@ -15,8 +16,8 @@ export const Find = () => {
         findAHikeWidget
       ]}
       history={[
-        'Home',
-        'Find Hikes'
+        homePage,
+        findHikesPage
       ]}
     />
   )

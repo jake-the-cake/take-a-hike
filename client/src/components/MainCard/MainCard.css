@@ -25,9 +25,14 @@
   font-weight: 700;
   cursor: pointer;
   transition: color .3s;
+  text-decoration: none;
+  text-transform: capitalize;
 }
 
-.maincard__history--link:hover {
+.maincard__history--link:hover,
+.maincard__history--nonlink {
+  text-transform: capitalize;
+  font-weight: 700;
   color: #3769da;
   text-shadow: 1px 2px 2px #adadad;
 }

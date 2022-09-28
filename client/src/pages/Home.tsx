@@ -1,6 +1,5 @@
-import { FakeComponent } from "../components/FakeComponent"
 import { MainCard } from "../components/MainCard/MainCard"
-import { FindAHikeWidget } from "../components/side-components/FindAHikeWidget/FindAHikeWidget"
+import { homePage } from "../objects/navHistoryObjects"
 import { findAHikeWidget } from "../objects/sideComponentObjects"
 
 interface HomeProps {
@@ -19,8 +18,8 @@ interface HomeProps {
 export const Home: HomeProps = () => {
   return (
     <MainCard
-      title="page title"
-      subtitle="subtitle text on the page"
+      title="home page"
+      subtitle="this is where a small blob of text can go"
       content={
         <div>
           ?
@@ -30,8 +29,7 @@ export const Home: HomeProps = () => {
         findAHikeWidget,
       ]}
       history={[
-        'Home',
-        'Home',
+        homePage,
       ]}
     />
   )

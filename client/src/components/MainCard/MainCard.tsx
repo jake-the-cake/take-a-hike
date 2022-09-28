@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom'
+import { SideComponentProps } from '../../objects/sideComponentObjects'
 import './MainCard.css'
 
-type SideComponentProps = {
-    Element: () => JSX.Element,
-    title: string
+
+type NavHistoryProps = {
+  name: string,
+  url: string
 }
 
 interface MainCardProps {
@@ -12,33 +15,34 @@ interface MainCardProps {
       title?: string,
       subtitle?: string,
       components?: SideComponentProps[],
-      history?: string[]
+      history?: NavHistoryProps[]
     }
   ): JSX.Element
 }
 
 export const MainCard: MainCardProps = ({ content, title, subtitle, components, history }) => {
+  const [ links, page] = [history?.slice(0, history.length - 1), history?.slice(-1)]
+  console.log(links, page)
   return (
     <div className="maincard__container">
       {
         history && (
           <div className='maincard__history--container'>
             {
-              history.map(( item: string, index: number ) => (
+              links!.map(( item: NavHistoryProps, index: number ) => (
                 <div key={`historydiv-${ index }`} style={{display: 'flex', gap: '1rem'}}>
-                  <div key={`historylink-${ index }`} className='maincard__history--link'>
-                    { item }
-                  </div>
-                  {
-                    index < ( history.length - 1 ) && (
+                  <Link to={ item.url } key={`historylink-${ index }`} className='maincard__history--link'>
+                    { item.name }
+                  </Link>
                       <div key={`historydivider-${ index }`} className='maincard__history--divider'>
                         &#9658;
                       </div>
-                    )
-                  }
                 </div>
               ))
             }
+            <div className='maincard__history--nonlink'>
+                    { page![0].name }
+                  </div>
           </div>
         )
       }
