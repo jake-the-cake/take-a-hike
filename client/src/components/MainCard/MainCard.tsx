@@ -26,7 +26,7 @@ export const MainCard: MainCardProps = ({ content, title, subtitle, components, 
   return (
     <div className="maincard__container">
       {
-        history && (
+        history ? (
           <div className='maincard__history--container'>
             {
               links!.map(( item: NavHistoryProps, index: number ) => (
@@ -44,7 +44,7 @@ export const MainCard: MainCardProps = ({ content, title, subtitle, components, 
                     { page![0].name }
                   </div>
           </div>
-        )
+        ) : <div className='nothing'></div>
       }
       {
         ( title || subtitle ) && (

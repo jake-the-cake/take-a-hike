@@ -6,15 +6,6 @@ interface HomeProps {
   (): JSX.Element
 }
 
-// let x = [{
-//   element: <FakeComponent />,
-//   title: 'Trail Conditions'
-// },
-// {
-//   element: <FakeComponent />,
-//   title: 'Recent Reviews'
-// },]
-
 export const Home: HomeProps = () => {
   return (
     <MainCard
@@ -27,9 +18,6 @@ export const Home: HomeProps = () => {
       }
       components={[
         findAHikeWidget,
-      ]}
-      history={[
-        homePage,
       ]}
     />
   )
