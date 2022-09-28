@@ -16,9 +16,18 @@ export const Home: HomeProps = () => {
         </div>
       }
       components={[
-        <FakeComponent />,
-        <FakeComponent />,
-        <FakeComponent />
+        {
+          element: <FakeComponent />,
+          title: 'Find A Hike'
+        },
+        {
+          element: <FakeComponent />,
+          title: 'Trail Conditions'
+        },
+        {
+          element: <FakeComponent />,
+          title: 'Recent Reviews'
+        },
       ]}
       history={[
         'Home',

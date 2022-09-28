@@ -1,7 +1,7 @@
 .maincard__container {
   margin: 1rem auto;
   width: 95vw;
-  background-color: rgb(255 255 255 / .7);
+  background-color: rgb(255 255 255 / .8);
   display: flex;
   padding-bottom: 1rem;
   flex-direction: column;
@@ -54,6 +54,32 @@
 }
 
 .maincard__content--side {
-  width: 200px;
-  background-color: red;
+  width: 20%;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.maincard__component--container {
+  background-color: rgb(255 255 255 / .5);
+  box-shadow: 0px 3px 7px -1px #373737;
+}
+
+.maincard__component--header {
+  background-color: rgb(37 137 37 / .6);
+  color: #eded69;
+  font-weight: 700;
+  padding: .3rem 1rem;
+  text-shadow: 1px 2px 3px #373737;
+}
+
+.maincard__component--main {
+  padding: .5rem 1rem;
+}
+
+@media only screen and ( max-width: 600px ) {
+  .maincard__content--side {
+    display: none;
+  }
 }

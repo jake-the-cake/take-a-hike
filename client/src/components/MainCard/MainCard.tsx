@@ -1,12 +1,17 @@
 import './MainCard.css'
 
+type SideComponentProps = {
+    element: JSX.Element,
+    title: string
+}
+
 interface MainCardProps {
   (
     props: {
       content: JSX.Element,
       title?: string,
       subtitle?: string,
-      components?: JSX.Element[],
+      components?: SideComponentProps[],
       history?: string[]
     }
   ): JSX.Element
@@ -56,13 +61,13 @@ export const MainCard: MainCardProps = ({ content, title, subtitle, components, 
         {
           components && (
             <div className='maincard__content--side'>
-              { components.map( (component: JSX.Element, index: number ) => (
+              { components.map( ( { element, title }: SideComponentProps, index: number ) => (
                 <div key={`sidecomponent-${ index }`} className='maincard__component--container'>
                   <div className='maincard__component--header'>
-                    Title
+                    { title }
                   </div>
                   <div className='maincard__component--main'>
-                    { component }
+                    { element }
                   </div>
                 </div>
               )) }
