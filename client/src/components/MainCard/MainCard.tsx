@@ -1,7 +1,7 @@
 import './MainCard.css'
 
 type SideComponentProps = {
-    element: JSX.Element,
+    Element: () => JSX.Element,
     title: string
 }
 
@@ -25,18 +25,18 @@ export const MainCard: MainCardProps = ({ content, title, subtitle, components, 
           <div className='maincard__history--container'>
             {
               history.map(( item: string, index: number ) => (
-                <>
-                  <div className='maincard__history--link'>
+                <div key={`historydiv-${ index }`} style={{display: 'flex', gap: '1rem'}}>
+                  <div key={`historylink-${ index }`} className='maincard__history--link'>
                     { item }
                   </div>
                   {
                     index < ( history.length - 1 ) && (
-                      <div className='maincard__history--divider'>
+                      <div key={`historydivider-${ index }`} className='maincard__history--divider'>
                         &#9658;
                       </div>
                     )
                   }
-                </>
+                </div>
               ))
             }
           </div>
@@ -61,13 +61,13 @@ export const MainCard: MainCardProps = ({ content, title, subtitle, components, 
         {
           components && (
             <div className='maincard__content--side'>
-              { components.map( ( { element, title }: SideComponentProps, index: number ) => (
+              { components.map( ( { Element , title }: SideComponentProps, index: number ) => (
                 <div key={`sidecomponent-${ index }`} className='maincard__component--container'>
                   <div className='maincard__component--header'>
                     { title }
                   </div>
                   <div className='maincard__component--main'>
-                    { element }
+                    { <Element /> }
                   </div>
                 </div>
               )) }

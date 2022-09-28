@@ -1,9 +1,20 @@
 import { FakeComponent } from "../components/FakeComponent"
 import { MainCard } from "../components/MainCard/MainCard"
+import { FindAHikeWidget } from "../components/side-components/FindAHikeWidget/FindAHikeWidget"
+import { findAHikeWidget } from "../objects/sideComponentObjects"
 
 interface HomeProps {
   (): JSX.Element
 }
+
+// let x = [{
+//   element: <FakeComponent />,
+//   title: 'Trail Conditions'
+// },
+// {
+//   element: <FakeComponent />,
+//   title: 'Recent Reviews'
+// },]
 
 export const Home: HomeProps = () => {
   return (
@@ -16,20 +27,10 @@ export const Home: HomeProps = () => {
         </div>
       }
       components={[
-        {
-          element: <FakeComponent />,
-          title: 'Find A Hike'
-        },
-        {
-          element: <FakeComponent />,
-          title: 'Trail Conditions'
-        },
-        {
-          element: <FakeComponent />,
-          title: 'Recent Reviews'
-        },
+        findAHikeWidget,
       ]}
       history={[
+        'Home',
         'Home',
       ]}
     />

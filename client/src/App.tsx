@@ -1,8 +1,7 @@
-import React from 'react';
-import { Link, Routes, Route, Navigate } from 'react-router-dom'
-import { TitleBar } from './components/TitleBar/TitleBar';
-import { Home } from './pages/Home';
-
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { TitleBar } from './components/TitleBar/TitleBar'
+import { Find } from './pages/Find'
+import { Home } from './pages/Home'
 
 /* 
   ::: This portion here is to handle GitHub Pages
@@ -16,30 +15,32 @@ import { Home } from './pages/Home';
 interface UrlRedirectObjectProps {
   [home:string]:string
 }
-const queryStringCheck: string | null  = new URLSearchParams(window.location.search).get('url')
-const urlRedirectObject:UrlRedirectObjectProps = {
+const queryStringCheck: string | null  = new URLSearchParams( window.location.search ).get('url')
+const urlRedirectObject: UrlRedirectObjectProps = {
   home: '/'
 }
 ////////////////////////////
 // END OF URL PARAM HANDLING
 ////////////////////////////
 
-
 function App() {
   // Check for the URL redirect parameter
-  if (queryStringCheck !== null) {
-    const urlRedirect: string = urlRedirectObject[queryStringCheck]
-    return <Navigate to={urlRedirect} />
+  if ( queryStringCheck !== null ) {
+    const urlRedirect: string = urlRedirectObject[ queryStringCheck ]
+    return <Navigate to={ urlRedirect } />
   } // END OF URL REDIRECT
 
   return (
     <div className="App">
       <TitleBar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={ <Home /> } />
+        <Route path='hikes' >
+          <Route path='find' element={ <Find /> } />
+        </Route>
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

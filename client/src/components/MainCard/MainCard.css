@@ -7,23 +7,34 @@
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
-  border-radius: .5rem;
+  box-shadow: 0px 3px 7px -1px #373737;
+  /* border-radius: .5rem; */
 }
 
 .maincard__history--container {
   background-color: rgb(37 137 37 / .6);
-  padding: .2rem 1rem;
+  padding: .3rem 1rem;
   font-size: .8rem;
   display: flex;
   gap: 1rem;
 }
 
 .maincard__history--link {
+  text-shadow: 1px 2px 2px #373737;
   color: #eded69;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.maincard__history--link:hover {
+  color: #3769da;
+  text-shadow: 1px 2px 2px #adadad;
 }
 
 .maincard__history--divider {
-  color: #376937;
+  text-shadow: 1px 1px 2px #dadada;
+  color: #116911;
 }
 
 .maincard__header {
@@ -75,7 +86,7 @@
 }
 
 .maincard__component--main {
-  padding: .5rem 1rem;
+  padding: 1rem;
 }
 
 @media only screen and ( max-width: 600px ) {
