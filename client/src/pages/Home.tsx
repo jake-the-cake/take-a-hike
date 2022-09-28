@@ -1,5 +1,4 @@
 import { MainCard } from "../components/MainCard/MainCard"
-import { homePage } from "../objects/navHistoryObjects"
 import { findAHikeWidget } from "../objects/sideComponentObjects"
 
 interface HomeProps {
