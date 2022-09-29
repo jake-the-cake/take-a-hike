@@ -1,30 +1,57 @@
 import React from 'react';
+import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps } from '../../objects/navigationObjects';
 import './TitleBar.css'
+
+const Logo = () => {
+  return (
+    <div className="titlebar__title">
+      <div className='titlebar__title--text'>
+        Elevate
+      </div>
+      <div className='titlebar__title--subtext'>
+        Mountain Fitness
+      </div>
+      <img
+        src='./images/logo.png'
+        alt="Elevate Logo"
+        className='titlebar__title--logo'
+      />
+    </div>
+  )
+}
+
+const LeftNavigation = () => {
+  const links: NavigationLinkProps[] = [
+    hikesNavigation
+  ]
+  return (
+    <>
+      {
+        links.map(( link: NavigationLinkMenuProps, index: number ) => (
+          <>{ link.text }
+            { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
+              <>
+                { sublink.text }
+              </>
+            )) }
+          </>
+        ))
+      }
+    </>
+  )
+}
+
 
 export const TitleBar = () => {
   return (
     <div className='titlebar__container'>
-      <div className="titlebar__logo--box">
-        <div className="titlebar__logo--tree">
-          <div className="titlebar__logo--tree-top tri"></div>
-          <div className="titlebar__logo--tree-middle tri"></div>
-          <div className="titlebar__logo--tree-bottom tri"></div>
-          <div className="titlebar__logo--tree-trunk"></div>
+        <div className="titlebar__nav nav__left">
+          <LeftNavigation />
         </div>
-
-        <div className="titlebar__logo--tree tree2">
-          <div className="titlebar__logo--tree-top tri"></div>
-          <div className="titlebar__logo--tree-middle tri"></div>
-          <div className="titlebar__logo--tree-bottom tri"></div>
-          <div className="titlebar__logo--tree-trunk"></div>
+        <Logo />
+        <div className="titlebar__nav nav__right">
+          right navigation
         </div>
-
-        <div className="titlebar__logo--title">
-          <span className='logo-title-top'>Take<br />A</span>
-          <span className='logo-title-bottom'>HIKE</span></div>
-      
-      </div>
-      <div className="titlebar__image--box">Photo</div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 @import '../../variables.css';
 
 .maincard__container {
+  box-shadow: 0px 5px 10px -3px #dadada;
   margin: 1rem auto;
   width: 95vw;
   background-color: rgb(255 255 255 / .8);
@@ -9,7 +10,6 @@
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
-  box-shadow: 0px 3px 7px -1px #373737;
 }
 
 .maincard__history--container {
@@ -57,7 +57,7 @@
 }
 
 .maincard__header--subtitle {
-  color: #373737;
+  color: var(--dark);
 }
 
 .maincard__content {
@@ -80,7 +80,7 @@
 
 .maincard__component--container {
   background-color: rgb(255 255 255 / .5);
-  box-shadow: 0px 3px 7px -1px #373737;
+  box-shadow: 0px 3px 7px -1px var(--dark);
 }
 
 .maincard__component--header {
@@ -88,7 +88,7 @@
   color: #eded69;
   font-weight: 700;
   padding: .3rem 1rem;
-  text-shadow: 1px 2px 3px #373737;
+  text-shadow: 1px 2px 3px var(--dark);
   text-transform: capitalize;
 }
 
