@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps } from '../../objects/navigationObjects';
+import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps, resourcesNavigation } from '../../objects/navigationObjects';
 import './TitleBar.css'
 
 const Logo = () => {
@@ -52,7 +52,12 @@ export const TitleBar = () => {
         </div>
         <Logo />
         <div className="titlebar__nav nav__right">
-          right navigation
+          <Navigation
+            links={[
+              resourcesNavigation,
+              resourcesNavigation,
+            ]}
+          />
         </div>
     </div>
   )

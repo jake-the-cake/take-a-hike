@@ -15,7 +15,6 @@ export interface NavigationLinkMenuProps {
 /*
   ::: Hikes
 */
-
 const hikesSubNavigation: NavigationLinkProps[] = [
   {
     type: 'link',
@@ -34,4 +33,14 @@ export const hikesNavigation: NavigationLinkMenuProps = {
   url: '/hikes',
   text: 'Hikes',
   dropdown: hikesSubNavigation
+}
+
+
+/*
+  ::: Resources
+*/
+export const resourcesNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  url: '/resources',
+  text: 'Resources'
 }
