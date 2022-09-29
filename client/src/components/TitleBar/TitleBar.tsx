@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps } from '../../objects/navigationObjects';
 import './TitleBar.css'
 
@@ -20,10 +20,7 @@ const Logo = () => {
   )
 }
 
-const LeftNavigation = () => {
-  const links: NavigationLinkProps[] = [
-    hikesNavigation
-  ]
+const Navigation: FC<{ links: NavigationLinkMenuProps[] }> = ({ links }) => {
   return (
     <>
       {
@@ -46,7 +43,12 @@ export const TitleBar = () => {
   return (
     <div className='titlebar__container'>
         <div className="titlebar__nav nav__left">
-          <LeftNavigation />
+          <Navigation
+            links={[
+              hikesNavigation,
+              hikesNavigation,
+            ]}
+          />
         </div>
         <Logo />
         <div className="titlebar__nav nav__right">
