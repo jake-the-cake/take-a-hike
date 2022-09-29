@@ -2,6 +2,13 @@ import React, { FC } from 'react';
 import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps, resourcesNavigation } from '../../objects/navigationObjects';
 import './TitleBar.css'
 
+interface NavigationBuildProps {
+  ( props: {
+    links: NavigationLinkMenuProps[],
+    side: string
+  }) : JSX.Element
+}
+
 const Logo = () => {
   return (
     <div className="titlebar__title">
@@ -20,16 +27,19 @@ const Logo = () => {
   )
 }
 
-const Navigation: FC<{ links: NavigationLinkMenuProps[] }> = ({ links }) => {
+const Navigation: NavigationBuildProps = ({ links, side }) => {
   return (
     <>
       {
         links.map(( link: NavigationLinkMenuProps, index: number ) => (
-          <>{ link.text }
+          <>
+            <div key={`nav-${ side }-${ index }`} className='nav__link--main'>
+              { link.text }
+            </div>
             { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
-              <>
+              <div key={`subnav-${ side }-${ index }`} className='nav__link--dropdown'>
                 { sublink.text }
-              </>
+              </div>
             )) }
           </>
         ))
@@ -44,6 +54,7 @@ export const TitleBar = () => {
     <div className='titlebar__container'>
         <div className="titlebar__nav nav__left">
           <Navigation
+            side='left'
             links={[
               hikesNavigation,
               hikesNavigation,
@@ -53,6 +64,7 @@ export const TitleBar = () => {
         <Logo />
         <div className="titlebar__nav nav__right">
           <Navigation
+            side='right'
             links={[
               resourcesNavigation,
               resourcesNavigation,

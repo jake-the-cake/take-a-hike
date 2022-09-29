@@ -10,7 +10,9 @@ export const Find = () => {
       title="Find A Hike"
       subtitle="Use your location and the search filters to find the right hike for you today."
       content={
-        <>Searching for: { queryStringCheck }</>
+        <>
+          Searching for: { queryStringCheck }
+        </>
       }
       components={[
         findAHikeWidget
