@@ -53,13 +53,60 @@
 
 .titlebar__nav {
   flex: 1;
+  display: flex;
+  height: 3rem;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .nav__left {
+  justify-content: end;
   text-align: right;
 }
 
 .titlebar__title--logo {
   position: absolute;
   top: .1rem;
+}
+
+.nav__link--container {
+  position: relative;
+  color: #dadada;
+  font-weight: 700;
+}
+
+.nav__link--main {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav__link--dropdown {
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  height: 2rem;
+  width: 10rem;
+  background-color: rgb(38, 90, 219);
+  border: 1px solid var(--blue_default);
+  padding: 0 .5rem;
+}
+
+.nav__link--container:hover > .nav__link--dropdown {
+  z-index: 10;
+}
+
+.nav__link--dropdown:hover {
+  background-color: orange;
+  cursor: pointer;
+}
+
+.nav__link--dropdown-link {
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
 }

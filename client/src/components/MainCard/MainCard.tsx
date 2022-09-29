@@ -22,7 +22,6 @@ interface MainCardProps {
 
 export const MainCard: MainCardProps = ({ content, title, subtitle, components, history }) => {
   const [ links, page] = [history?.slice(0, history.length - 1), history?.slice(-1)]
-  console.log(links, page)
   return (
     <div className="maincard__container">
       {

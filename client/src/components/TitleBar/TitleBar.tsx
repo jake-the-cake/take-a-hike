@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { hikesNavigation, NavigationLinkMenuProps, NavigationLinkProps, resourcesNavigation } from '../../objects/navigationObjects';
 import './TitleBar.css'
 
@@ -28,26 +29,47 @@ const Logo = () => {
 }
 
 const Navigation: NavigationBuildProps = ({ links, side }) => {
+  useEffect(() => {
+    const navLinks = document.getElementsByClassName('__nav--searchable') as HTMLCollectionOf<HTMLDivElement>
+    console.log(navLinks)
+    // const numberOfElements: number = hoveredLink.children.length
+    // const elementArray: HTMLDivElement[] = []
+    // for (let i=1; i < numberOfElements; i++) {
+    //   elementArray.push(hoveredLink.children[i] as HTMLDivElement)
+    // }
+    // hoveredLink.addEventListener('mouseover', (event: MouseEvent) => {
+    //   let position = 1
+    //   elementArray.forEach((item:any) => {
+    //     position += 2
+    //     item.style.top = `${ position }rem`
+    //   })
+    // })
+    // hoveredLink.addEventListener('mouseout', () => {
+    //   elementArray.forEach((item:any) => {
+    //     item.style.top = '0'
+    //   })
+    // })
+  },[])
+
   return (
     <>
       {
         links.map(( link: NavigationLinkMenuProps, index: number ) => (
-          <>
+          <div id={`nav-${ side }-${ index }`} className='nav__link--container __nav--searchable' key={`${ side }-${ index }`}>
             <div key={`nav-${ side }-${ index }`} className='nav__link--main'>
               { link.text }
             </div>
             { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
               <div key={`subnav-${ side }-${ index }`} className='nav__link--dropdown'>
-                { sublink.text }
+                <Link className='nav__link--dropdown-link' to='/hikes/find'>{ sublink.text }</Link>
               </div>
             )) }
-          </>
+          </div>
         ))
       }
     </>
   )
 }
-
 
 export const TitleBar = () => {
   return (
@@ -66,7 +88,6 @@ export const TitleBar = () => {
           <Navigation
             side='right'
             links={[
-              resourcesNavigation,
               resourcesNavigation,
             ]}
           />
