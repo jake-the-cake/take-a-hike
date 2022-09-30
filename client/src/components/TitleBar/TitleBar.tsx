@@ -46,11 +46,19 @@ const Navigation: NavigationBuildProps = ({ links, side }) => {
         elementArray.forEach((item:any) => {
           position += 2
           item.style.top = `${ position }rem`
+          setTimeout(() => {
+            item.classList.add('bringToFront')
+            console.log(item)
+          }, 100)
         })
       })
       hoveredLink.addEventListener('mouseout', () => {
         elementArray.forEach((item:any) => {
-          item.style.top = '0'
+          setTimeout(() => {
+            item.classList.remove('bringToFront')
+            item.style.top = '0'
+          }, 100)
+          console.log(item)
         })
       })
     })
