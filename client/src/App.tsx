@@ -36,7 +36,21 @@ function App() {
       <Routes>
         <Route path='/' element={ <Home /> } />
         <Route path='hikes' >
+          <Route path='' element={<>Hikes home</>} />
           <Route path='find' element={ <Find /> } />
+          <Route path='popular' element={ <>Popular hikes</> } />
+        </Route>
+        <Route path='lifestyle'>
+          <Route path='' element={<>Lifestyle home</>} />
+          <Route path='idk' element={<>Lifestyle IDK</>} />
+        </Route>
+        <Route path='community'>
+          <Route path='' element={<>Lifestyle home</>} />
+          <Route path='idk' element={<>Community IDK</>} />
+        </Route>
+        <Route path='resources'>
+          <Route path='' element={<>Resources home</>} />
+          <Route path='idk' element={<>Resources IDK</>} />
         </Route>
       </Routes>
     </div>

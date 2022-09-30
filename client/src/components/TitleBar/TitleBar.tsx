@@ -62,7 +62,7 @@ const Navigation: NavigationBuildProps = ({ links, side }) => {
         links.map(( link: NavigationLinkMenuProps, index: number ) => (
           <div id={`nav-${ side }-${ index }`} className='nav__link--container __nav--searchable' key={`${ side }-${ index }`}>
             <div key={`nav-${ side }-${ index }`} className='nav__link--main'>
-              { link.text }
+              <Link className='nav__link--dropdown-link' to={ link.url ? link.url  : '/' } >{ link.text }</Link>
             </div>
             { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
               <div key={`subnav-${ side }-${ index }`} className={`nav__link--dropdown nav__${ side }`}>
