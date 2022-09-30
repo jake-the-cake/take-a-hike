@@ -54,14 +54,18 @@
 .titlebar__nav {
   flex: 1;
   display: flex;
+  justify-content: space-evenly;
   height: 3rem;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.nav__left {
-  justify-content: end;
-  text-align: right;
+/* .nav__left {
+}*/
+
+.nav__right {
+  right: 0px;
+  text-align: right !important;
 }
 
 .titlebar__title--logo {

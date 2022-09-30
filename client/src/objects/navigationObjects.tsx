@@ -37,10 +37,45 @@ export const hikesNavigation: NavigationLinkMenuProps = {
 
 
 /*
+  ::: Lifestyle
+*/
+export const lifestyleNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  url: '/lifestyle',
+  text: 'Lifestyle',
+  dropdown: [{
+    type: 'link',
+    url: '/idk',
+    text: 'Sublink'
+  }]
+}
+
+
+/*
+  ::: Community
+*/
+export const communityNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  url: '/community',
+  text: 'Community',
+  dropdown: [{
+    type: 'link',
+    url: '/idk',
+    text: 'Sublink'
+  }]
+}
+
+
+/*
   ::: Resources
 */
 export const resourcesNavigation: NavigationLinkMenuProps = {
   type: 'droplink',
   url: '/resources',
-  text: 'Resources'
+  text: 'Resources',
+  dropdown: [{
+    type: 'link',
+    url: '/idk',
+    text: 'Sublink'
+  }]
 }
