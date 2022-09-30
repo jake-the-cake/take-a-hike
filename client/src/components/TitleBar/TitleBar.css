@@ -88,7 +88,7 @@
   cursor: pointer;
 }
 
-.nav__link--main:hover {
+.nav__link--container:hover > .nav__link--main {
   background-color: rgb(38 90 219 / .4);
   box-shadow: inset 0 9px 7px -7px var(--dark),
               inset 0 -6px 7px -7px #dadada;
@@ -129,7 +129,7 @@
 }
 
 .nav__link--dropdown:hover {
-  background-color: orange;
+  background-color: #2537b4;
   cursor: pointer;
 }
 
@@ -140,4 +140,16 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
+}
+
+@media only screen and ( max-width: 800px) {
+  .nav__link--main {
+    font-size: .7rem;
+  }
+}
+
+@media only screen and ( max-width: 600px) {
+  .nav__link--main {
+    font-size: .6rem;
+  }
 }
