@@ -35,6 +35,34 @@ export const hikesNavigation: NavigationLinkMenuProps = {
   dropdown: hikesSubNavigation
 }
 
+/*
+  ::: Scenery
+*/
+export const sceneryNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  url: '/scenery',
+  text: 'Scenery',
+  dropdown: [{
+    type: 'link',
+    url: '/idk',
+    text: 'Sublink'
+  }]
+}
+
+/*
+  ::: Account
+*/
+export const accountNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  url: '/account',
+  text: 'Account',
+  dropdown: [{
+    type: 'link',
+    url: '/idk',
+    text: 'Sublink'
+  }]
+}
+
 
 /*
   ::: Lifestyle

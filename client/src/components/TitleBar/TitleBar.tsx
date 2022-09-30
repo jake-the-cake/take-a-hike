@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { communityNavigation, hikesNavigation, lifestyleNavigation, NavigationLinkMenuProps, NavigationLinkProps, resourcesNavigation } from '../../objects/navigationObjects';
+import { accountNavigation, communityNavigation, hikesNavigation, lifestyleNavigation, NavigationLinkMenuProps, NavigationLinkProps, resourcesNavigation, sceneryNavigation } from '../../objects/navigationObjects';
 import './TitleBar.css'
 
 interface NavigationBuildProps {
@@ -89,6 +89,7 @@ export const TitleBar = () => {
             links={[
               lifestyleNavigation,
               hikesNavigation,
+              sceneryNavigation,
             ]}
           />
         </div>
@@ -97,6 +98,7 @@ export const TitleBar = () => {
           <Navigation
             side='right'
             links={[
+              accountNavigation,
               communityNavigation,
               resourcesNavigation,
             ]}
