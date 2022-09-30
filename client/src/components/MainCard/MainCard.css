@@ -1,10 +1,13 @@
 @import '../../variables.css';
 
 .maincard__container {
-  box-shadow: 0px 5px 10px -3px #dadada;
+  box-shadow: 3px 4px 7px -2px #161616,
+              -3px 4px 7px -2px #161616;
   margin: 1rem auto;
+  border-radius: .2rem;
   width: 95vw;
-  background-color: rgb(255 255 255 / .8);
+  color: #dadada;
+  background-color: rgb(18 31 56 / .7);
   display: flex;
   padding-bottom: 1rem;
   flex-direction: column;
@@ -13,7 +16,7 @@
 }
 
 .maincard__history--container {
-  background-color: rgb(37 137 37 / .6);
+  background-color: var(--blue_default);
   padding: .3rem 1rem;
   font-size: .8rem;
   display: flex;
@@ -30,12 +33,17 @@
   text-transform: capitalize;
 }
 
-.maincard__history--link:hover,
 .maincard__history--nonlink {
+  font-weight: unset;
+  font-style: italic;
   text-transform: capitalize;
+}
+
+.maincard__history--link:hover {
+  text-transform: capitalize;
+  color: #dadada;
   font-weight: 700;
-  color: var(--dark);
-  text-shadow: 1px 2px 2px #adadad;
+  /* text-shadow: 1px 2px 2px #adadad; */
 }
 
 .maincard__history--divider {
@@ -57,7 +65,7 @@
 }
 
 .maincard__header--subtitle {
-  color: var(--dark);
+  color: #6996ed;
 }
 
 .maincard__content {

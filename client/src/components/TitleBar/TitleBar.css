@@ -16,6 +16,7 @@
 
 .titlebar__title {
   position: absolute;
+  z-index: 5;
   border: 2px solid #dadada;
   box-shadow: 0px 2px 6px 1px var(--dark);
   top: -1rem;
