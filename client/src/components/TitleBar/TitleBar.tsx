@@ -38,27 +38,23 @@ const Navigation: NavigationBuildProps = ({ links, side }) => {
     navLinkArray.forEach(( hoveredLink, index: number) => {
       const numberOfElements: number = hoveredLink.children.length
       const elementArray: HTMLDivElement[] = []
-      for (let i=1; i < numberOfElements; i++) {
-        elementArray.push(hoveredLink.children[i] as HTMLDivElement)
-      }
-      hoveredLink.addEventListener('mouseover', (event: MouseEvent) => {
+
+      const mouseOverEvent = () => {
         let position = 1
         elementArray.forEach((item:any) => {
           position += 2
           item.style.top = `${ position }rem`
-          setTimeout(() => {
-            item.classList.add('bringToFront')
-            console.log(item)
-          }, 100)
         })
-      })
-      hoveredLink.addEventListener('mouseout', () => {
+      }
+
+      for (let i=1; i < numberOfElements; i++) {
+        elementArray.push(hoveredLink.children[i] as HTMLDivElement)
+      }
+      hoveredLink.addEventListener('mouseover', mouseOverEvent)
+      hoveredLink.addEventListener('mouseout', (e: MouseEvent) => {
+        console.log(e)
         elementArray.forEach((item:any) => {
-          setTimeout(() => {
-            item.classList.remove('bringToFront')
-            item.style.top = '0'
-          }, 100)
-          console.log(item)
+          item.style.top = '0'
         })
       })
     })

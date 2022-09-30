@@ -45,7 +45,7 @@ function App() {
           <Route path='idk' element={<>Lifestyle IDK</>} />
         </Route>
         <Route path='community'>
-          <Route path='' element={<>Lifestyle home</>} />
+          <Route path='' element={<>Community home</>} />
           <Route path='idk' element={<>Community IDK</>} />
         </Route>
         <Route path='resources'>

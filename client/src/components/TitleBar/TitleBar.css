@@ -106,9 +106,9 @@
   transition: .2s top;
 }
 
-/* .nav__link--container:hover > .nav__link--dropdown {
+.nav__link--container:hover > .nav__link--dropdown {
   z-index: 10;
-} */
+}
 
 .bringToFront {
   z-index: 100 !important;
