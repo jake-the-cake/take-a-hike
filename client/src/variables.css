@@ -1,4 +1,6 @@
 :root {
   --dark: #373737;
+  --darker: #161616;
   --blue_default: rgb(45, 137, 169);
+  --yellow_bartext: #eded69;
 }

@@ -25,7 +25,7 @@
 
 .maincard__history--link {
   text-shadow: 1px 2px 2px #373737;
-  color: #eded69;
+  color: var(--yellow_bartext);
   font-weight: 700;
   cursor: pointer;
   transition: color .3s;
