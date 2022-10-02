@@ -1,5 +1,6 @@
-import { MainCard } from "../components/MainCard/MainCard"
-import '../components/Gallery/Gallery.css'
+import { MainCard } from "../../components/MainCard/MainCard"
+import '../../components/Gallery/Gallery.css'
+import { homePage } from "../../objects/navHistoryObjects"
 
 interface MediaItemProps {
   title: string,
@@ -12,9 +13,18 @@ const GalleryTile = (value: any) => {
   const { item, index } = value
   const date = new Date(item.timestamp).toLocaleDateString() 
   const time = new Date(item.timestamp).toLocaleTimeString() 
+  const title = () => {
+    const MAX_TITLE_LENGTH = 15
+    if ( item.title.length > MAX_TITLE_LENGTH ) {
+      return `${ item.title.slice(0, MAX_TITLE_LENGTH) }...`
+    }
+    return item.title
+  }
   return (
     <div key={`${ item.title }-${ index }`} className="gallery__tile">
-      <div className="gallery__tile--title">{ item.title }</div>
+      <div className="gallery__tile--title">
+        { title() }
+      </div>
       <div className="gallery__tile--image">
         <img src={ item.image } alt='filler' />
       </div>
@@ -22,7 +32,7 @@ const GalleryTile = (value: any) => {
         <div className="gallery__tile--stat">
           <div>from</div><div className="blue-text large-stat">{ item.user }</div>
         </div>
-        <div className="gallery__tile--stat small-stat">
+        <div className="gallery__tile--stat right-stat">
           on { date }<br />at { time }
         </div>  
       </div>
@@ -33,7 +43,7 @@ const GalleryTile = (value: any) => {
 export const Scenery = () => {
   const mediaItems: MediaItemProps[] = [
     {
-      title: 'This image',
+      title: 'This has a longer title',
       image: '/images/logo.png',
       timestamp: Date.now(),
       user: 'jake'
@@ -42,25 +52,25 @@ export const Scenery = () => {
       title: 'This image',
       image: '/images/logo.png',
       timestamp: Date.now(),
-      user: 'jake'
+      user: 'username'
     },
     {
       title: 'This image',
       image: '/images/logo.png',
       timestamp: Date.now(),
-      user: 'jake'
+      user: 'fake_person'
     },
     {
       title: 'This image',
       image: '/images/logo.png',
       timestamp: Date.now(),
-      user: 'jake'
+      user: 'whosethis'
     },
     {
       title: 'This image',
       image: '/images/logo.png',
       timestamp: Date.now(),
-      user: 'jake'
+      user: 'dgr55eeed'
     },
   ]
   return (
@@ -80,12 +90,16 @@ export const Scenery = () => {
           <div className="gallery__body--container">
             {
               mediaItems.map((item: any, index: number) => (
-                <GalleryTile item={ item } index={ index } />
+                <GalleryTile key={`photo-gallery-tile-${ index }`} item={ item } index={ index } />
               ))
             }
           </div>
         </div>
       }
+      history={[
+        homePage,
+        
+      ]}
     />
   )
 }

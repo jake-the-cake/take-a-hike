@@ -62,7 +62,15 @@ export const Navigation: NavigationBuildProps = ({ links, side }) => {
             </div>
             { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
               <div key={`subnav-${ side }-${ index }`} className={`nav__link--dropdown nav__${ side }`}>
-                <Link className='nav__link--dropdown-link' to={(link.url && sublink.url) ? link.url + sublink.url  : '/'}>{ sublink.text }</Link>
+                <Link key={`subnav-link-${ side }-${ index }`} className='nav__link--dropdown-link' to={
+                  (link.url && sublink.url)
+                  ? link.url + sublink.url
+                  : ( !link.url && sublink.url )
+                    ? sublink.url
+                    : '/'
+                }>
+                  { sublink.text }
+                </Link>
               </div>
             )) }
           </div>

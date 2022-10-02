@@ -1,8 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { TitleBar } from './components/TitleBar/TitleBar'
 import { Find } from './pages/Find'
+import { Hikes } from './pages/hikes/Hikes'
 import { Home } from './pages/Home'
-import { Scenery } from './pages/Scenery'
+import { Login } from './pages/Login'
+import { Register } from './pages/Register'
+import { Scenery } from './pages/scenery/Scenery'
 
 /* 
   ::: This portion here is to handle GitHub Pages
@@ -36,8 +39,10 @@ function App() {
       <TitleBar />
       <Routes>
         <Route path='/' element={ <Home /> } />
+        <Route path='/register' element={ <Register /> } />
+        <Route path='/login' element={ <Login /> } />
         <Route path='hikes' >
-          <Route path='' element={<>Hikes home</>} />
+          <Route path='' element={ <Hikes /> } />
           <Route path='find' element={ <Find /> } />
           <Route path='popular' element={ <>Popular hikes</> } />
         </Route>

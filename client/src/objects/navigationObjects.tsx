@@ -55,18 +55,18 @@ export const sceneryNavigation: NavigationLinkMenuProps = {
 const loginSubNavigation: NavigationLinkProps[] = [
   {
     type: 'link',
-    url: '/find',
-    text: 'Find By Location'
+    url: '/login',
+    text: 'Login'
   },
   {
     type: 'link',
-    url: '/popular',
-    text: 'Most Popular'
+    url: '/register',
+    text: 'Create a Free Account'
   }
 ]
 
 export const loginNavigation: NavigationLinkMenuProps = {
-  type: 'droplink',
+  type: 'dropText',
   text: 'Account',
   dropdown: loginSubNavigation
 }
