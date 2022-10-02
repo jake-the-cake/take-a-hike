@@ -50,7 +50,15 @@ export const Navigation: NavigationBuildProps = ({ links, side }) => {
         links.map(( link: NavigationLinkMenuProps, index: number ) => (
           <div id={`nav-${ side }-${ index }`} className='nav__link--container __nav--searchable' key={`${ side }-${ index }`}>
             <div key={`nav-${ side }-${ index }`} className='nav__link--main'>
-              <Link className='nav__link--dropdown-link' to={ link.url ? link.url  : '/' } >{ link.text }</Link>
+              {
+                link.url
+                ? (
+                  <Link className='nav__link--dropdown-link' to={ link.url } >{ link.text }</Link>
+                )
+                : (
+                  <div className='nav__link--dropdown-link'>{ link.text }</div>
+                )
+              }
             </div>
             { link.dropdown && link.dropdown.map(( sublink: NavigationLinkProps, index: number ) => (
               <div key={`subnav-${ side }-${ index }`} className={`nav__link--dropdown nav__${ side }`}>

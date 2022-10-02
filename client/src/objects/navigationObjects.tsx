@@ -50,6 +50,28 @@ export const sceneryNavigation: NavigationLinkMenuProps = {
 }
 
 /*
+  ::: Hikes
+*/
+const loginSubNavigation: NavigationLinkProps[] = [
+  {
+    type: 'link',
+    url: '/find',
+    text: 'Find By Location'
+  },
+  {
+    type: 'link',
+    url: '/popular',
+    text: 'Most Popular'
+  }
+]
+
+export const loginNavigation: NavigationLinkMenuProps = {
+  type: 'droplink',
+  text: 'Account',
+  dropdown: loginSubNavigation
+}
+
+/*
   ::: Account
 */
 export const accountNavigation: NavigationLinkMenuProps = {
@@ -101,9 +123,4 @@ export const resourcesNavigation: NavigationLinkMenuProps = {
   type: 'droplink',
   url: '/resources',
   text: 'Resources',
-  dropdown: [{
-    type: 'link',
-    url: '/idk',
-    text: 'Sublink'
-  }]
 }

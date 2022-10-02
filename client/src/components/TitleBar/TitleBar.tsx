@@ -1,4 +1,4 @@
-import { accountNavigation, communityNavigation, hikesNavigation, lifestyleNavigation, resourcesNavigation, sceneryNavigation } from '../../objects/navigationObjects';
+import { accountNavigation, communityNavigation, hikesNavigation, lifestyleNavigation, loginNavigation, resourcesNavigation, sceneryNavigation } from '../../objects/navigationObjects';
 import { Navigation } from './subcomponents/Navigation';
 import './TitleBar.css'
 
@@ -21,6 +21,7 @@ const Logo = () => {
 }
 
 export const TitleBar = () => {
+  let user = false
   return (
     <div className='titlebar__container'>
         <div className="titlebar__nav">
@@ -38,7 +39,7 @@ export const TitleBar = () => {
           <Navigation
             side='right'
             links={[
-              accountNavigation,
+              ( user ? accountNavigation : loginNavigation ),
               communityNavigation,
               resourcesNavigation,
             ]}
