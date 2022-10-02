@@ -53,6 +53,9 @@
 .gallery__tile--image {
   background-color: white;
   max-width: 400px;
+  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .gallery__tile--stats {
