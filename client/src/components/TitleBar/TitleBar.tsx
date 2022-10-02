@@ -36,10 +36,12 @@ const Navigation: NavigationBuildProps = ({ links, side }) => {
       navLinkArray.push(navLinks[i])
     }
     navLinkArray.forEach(( hoveredLink, index: number) => {
+      
       const numberOfElements: number = hoveredLink.children.length
       const elementArray: HTMLDivElement[] = []
-
-      const mouseOverEvent = () => {
+      
+      const expandDropdown = () => {
+        hoveredLink.addEventListener('click', collapseDropdown)
         let position = 1
         elementArray.forEach((item:any) => {
           position += 2
@@ -47,16 +49,17 @@ const Navigation: NavigationBuildProps = ({ links, side }) => {
         })
       }
 
-      for (let i=1; i < numberOfElements; i++) {
-        elementArray.push(hoveredLink.children[i] as HTMLDivElement)
-      }
-      hoveredLink.addEventListener('mouseover', mouseOverEvent)
-      hoveredLink.addEventListener('mouseout', (e: MouseEvent) => {
-        console.log(e)
+      const collapseDropdown = () => {
         elementArray.forEach((item:any) => {
           item.style.top = '0'
         })
-      })
+      }
+      
+      for (let i=1; i < numberOfElements; i++) {
+        elementArray.push(hoveredLink.children[i] as HTMLDivElement)
+      }
+      hoveredLink.addEventListener('mouseover', expandDropdown)
+      hoveredLink.addEventListener('mouseout', collapseDropdown)
     })
   },[])
 
