@@ -3,6 +3,11 @@ export const homePage = {
   url: '/'
 }
 
+export const hikesPage = {
+  name: 'hikes',
+  url: '/hikes'
+}
+
 export const findHikesPage = {
   name: 'find a hike',
   url: '/hikes/find'

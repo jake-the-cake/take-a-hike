@@ -49,7 +49,7 @@ export const Navigation: NavigationBuildProps = ({ links, side }) => {
       {
         links.map(( link: NavigationLinkMenuProps, index: number ) => (
           <div id={`nav-${ side }-${ index }`} className='nav__link--container __nav--searchable' key={`${ side }-${ index }`}>
-            <div key={`nav-${ side }-${ index }`} className='nav__link--main'>
+            <div key={`nav-${ side }-${ index }`} className={`nav__link--main ${ link.type }`}>
               {
                 link.url
                 ? (

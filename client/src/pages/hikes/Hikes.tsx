@@ -1,4 +1,5 @@
 import { MainCard } from "../../components/MainCard/MainCard"
+import { hikesPage, homePage } from "../../objects/navHistoryObjects"
 
 export const Hikes = () => {
   return (
@@ -8,6 +9,10 @@ export const Hikes = () => {
           Todo = breakneck, knifes edge 
         </>
       }
+      history={[
+        homePage,
+        hikesPage,
+      ]}
     />
   )
 }

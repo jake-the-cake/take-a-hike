@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { MainCard } from "../components/MainCard/MainCard"
-import { RegisterForm } from "../forms/RegisterForm"
+import { LoginForm } from "../forms/LoginForm"
 import { homePage, loginPage } from "../objects/navHistoryObjects"
 
 export const Login = () => {
@@ -10,7 +10,7 @@ export const Login = () => {
       subtitle="Enter your email and password in the form below to access your account."
       content={
         <>
-          <RegisterForm />
+          <LoginForm />
           <div>
             Don't have an account? <Link to={'/register'}>Get a FREE Account</Link>
           </div>
