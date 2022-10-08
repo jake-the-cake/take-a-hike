@@ -3,6 +3,7 @@ import Mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import { returnErrorOnTerminal } from './common/consoleLogTerminal'
 import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
+import { ROUTER as UserRouter } from './routes/users/UserRoutes'
 
 const APP = Express()
 const DEFAULT_PORT: number = 4201
@@ -12,6 +13,7 @@ APP.use(Express.json())
 APP.use(Express.urlencoded({ extended: false }))
 
 APP.use('/auth', AuthRouter)
+APP.use('/users', UserRouter)
 
 APP.get('*', ( req: any, res: any ) => {
   res.send('404')  

@@ -19,18 +19,9 @@ exports.ROUTER = express_1.default.Router();
 exports.ROUTER.get('/', (req, res) => {
     res.send('dont end up here');
 });
-exports.ROUTER.post('/login', (req, res) => {
-    res.status(201).json({
-        request: req.body
+exports.ROUTER.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield UserModel_1.UserModel.find();
+    res.status(200).json({
+        data
     });
-});
-exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUserObject = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    };
-    const x = new UserModel_1.UserModel(newUserObject);
-    x.save();
-    res.status(201).json(newUserObject);
 }));

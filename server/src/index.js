@@ -8,12 +8,14 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const consoleLogTerminal_1 = require("./common/consoleLogTerminal");
 const AuthRoutes_1 = require("./routes/auth/AuthRoutes");
+const UserRoutes_1 = require("./routes/users/UserRoutes");
 const APP = (0, express_1.default)();
 const DEFAULT_PORT = 4201;
 dotenv_1.default.config();
 APP.use(express_1.default.json());
 APP.use(express_1.default.urlencoded({ extended: false }));
 APP.use('/auth', AuthRoutes_1.ROUTER);
+APP.use('/users', UserRoutes_1.ROUTER);
 APP.get('*', (req, res) => {
     res.send('404');
 });
