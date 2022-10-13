@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ROUTER = void 0;
 const express_1 = __importDefault(require("express"));
 const UserModel_1 = require("../../models/UserModel");
+const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
 exports.ROUTER = express_1.default.Router();
 exports.ROUTER.get('/', (req, res) => {
     res.send('dont end up here');
@@ -25,12 +26,20 @@ exports.ROUTER.post('/login', (req, res) => {
     });
 });
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUserObject = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    };
-    const x = new UserModel_1.UserModel(newUserObject);
-    x.save();
-    res.status(201).json(newUserObject);
+    const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
+    console.log(email);
+    if (!email.error) {
+        const newUserObject = {
+            username: req.body.username,
+            email: email.value,
+            password: req.body.password
+        };
+        const x = new UserModel_1.UserModel(newUserObject);
+        x.save();
+        res.status(201).json(newUserObject);
+    }
+    else {
+        console.log(email.error);
+        res.status(401).json(email.error);
+    }
 }));

@@ -35,6 +35,7 @@ const allUsers = axios_1.default.get('http://localhost:4200/users/all').then((re
 (0, globals_1.describe)('Email address validation', () => {
     it('Should exist', () => {
         (0, globals_1.expect)(goodEmail).not.toBeUndefined();
+        (0, globals_1.expect)(goodEmail + ' ').not.toBeUndefined();
         (0, globals_1.expect)(noEmail).toBeFalsy();
     });
     it('Should be unique', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,6 +51,7 @@ const allUsers = axios_1.default.get('http://localhost:4200/users/all').then((re
         (0, globals_1.expect)(duplicates.length > 0).toBeTruthy();
         (0, globals_1.expect)(noDuplicates.length > 0).toBeFalsy();
     }));
+    // format tests
     (0, globals_1.describe)('Should be formatted correctly', () => {
         it('Should only have 1 @ symbol', () => {
             testUsersEmailArray.forEach((email) => {
@@ -67,7 +69,7 @@ const allUsers = axios_1.default.get('http://localhost:4200/users/all').then((re
         it('Should not have consecutive dots', () => {
             testUsersEmailArray.forEach((email) => {
                 console.log(email);
-                const { error } = (0, validateEmailAddress_1.ValidateEmailDot)({ error: undefined, value: '' }, email);
+                const { error } = (0, validateEmailAddress_1.validateEmailDot)({ error: undefined, value: '' }, email);
                 console.log(error);
                 if (email === goodEmail) {
                     (0, globals_1.expect)(error).toBeUndefined();

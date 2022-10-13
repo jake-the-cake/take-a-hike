@@ -2,7 +2,7 @@ import { UserModel } from "../models/UserModel"
 import { describe, expect, test } from '@jest/globals'
 import axios from "axios"
 import { returnErrorOnTerminal } from "../common/consoleLogTerminal"
-import { validateEmailAddress, validateEmailAt, ValidateEmailDot } from "../validation/validateEmailAddress"
+import { validateEmailAddress, validateEmailAt, validateEmailDot } from "../validation/validateEmailAddress"
 
 interface TestUserProps {
   email: string
@@ -34,6 +34,7 @@ const allUsers = axios.get(
 describe('Email address validation', () => {
   it('Should exist', () => {
     expect(goodEmail).not.toBeUndefined()
+    expect(goodEmail + ' ').not.toBeUndefined()
     expect(noEmail).toBeFalsy()
   })
   it('Should be unique', async () => {
@@ -49,6 +50,8 @@ describe('Email address validation', () => {
     expect( duplicates.length > 0 ).toBeTruthy()
     expect( noDuplicates.length > 0 ).toBeFalsy()
   })
+
+  // format tests
   describe('Should be formatted correctly', () => {
     it('Should only have 1 @ symbol', () => {
       testUsersEmailArray.forEach(
@@ -69,7 +72,7 @@ describe('Email address validation', () => {
             testUsersEmailArray.forEach(
         ( email: string ) => {
           console.log(email)
-          const { error }: any = ValidateEmailDot( { error: undefined, value: '' }, email )
+          const { error }: any = validateEmailDot( { error: undefined, value: '' }, email )
           console.log(error)
           if ( email === goodEmail ) {
             expect(error).toBeUndefined()

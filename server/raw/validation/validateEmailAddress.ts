@@ -1,6 +1,7 @@
 import { returnErrorOnTerminal } from "../common/consoleLogTerminal"
+import { UserModel } from "../models/UserModel"
 
-interface ResponseObjectProps {
+export interface ResponseObjectProps {
   error?: {
     type: string,
     message: string
@@ -12,11 +13,11 @@ interface ResponseObjectValidationFunctionProps {
   (
     object: ResponseObjectProps,
     input: string  
-  ) : ResponseObjectProps | undefined
+  ) : ResponseObjectProps | undefined | Promise<ResponseObjectProps>
 }
 
 interface StringValidationFunctionProps {
-  ( input: string ) : ResponseObjectProps
+  ( input: string ) : Promise<ResponseObjectProps> | ResponseObjectProps
 }
 
 export const validateEmailAt: ResponseObjectValidationFunctionProps = ( object, input ) => {
@@ -30,7 +31,7 @@ export const validateEmailAt: ResponseObjectValidationFunctionProps = ( object, 
   return object
 }
 
-export const ValidateEmailDot: ResponseObjectValidationFunctionProps = ( object, input ) => {
+export const validateEmailDot: ResponseObjectValidationFunctionProps = ( object, input ) => {
   input.split('.').forEach(
     ( section: string ) => {
       if ( section.length === 0 ) {
@@ -44,7 +45,17 @@ export const ValidateEmailDot: ResponseObjectValidationFunctionProps = ( object,
   return object
 }
 
-export const validateEmailAddress: StringValidationFunctionProps = ( input ) => {
+export const validateUniqueInput: ResponseObjectValidationFunctionProps = async ( object, input ) => {
+  if ( await UserModel.findOne( { email: input }) ) {
+    object.error = {
+      message: 'The value provided has already been used.',
+      type: 'DuplicatationErr'
+    }
+  }
+  return object
+}
+
+export const validateEmailAddress: StringValidationFunctionProps = async ( input ) => {
   // create an object that contains original value, trimmed
   const responseObject: ResponseObjectProps = {
     value: input.trim()
@@ -52,7 +63,8 @@ export const validateEmailAddress: StringValidationFunctionProps = ( input ) => 
 
   // run validation functions
   validateEmailAt( responseObject, responseObject.value )
-  ValidateEmailDot( responseObject, responseObject.value )
+  validateEmailDot( responseObject, responseObject.value )
+  await validateUniqueInput( responseObject, responseObject.value )
 
   // if no errors, return original value inside of response object
   return responseObject
