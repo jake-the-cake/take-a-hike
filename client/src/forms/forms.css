@@ -93,3 +93,25 @@
   color: var(--yellow_bartext);
   border-color: var(--yellow_bartext);
 }
+
+.form__footer--container {
+  display: flex;
+  margin-top: 1rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.form__footer--text {
+  font-style: italic;
+  font-size: .8rem;
+}
+
+.form__footer--link {
+  color: var(--yellow_bartext);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.form__footer--link:hover {
+  opacity: .8;
+}

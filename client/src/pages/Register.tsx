@@ -11,8 +11,11 @@ export const Register = () => {
       content={
         <>
           <RegisterForm />
-          <div>
-            Already have an account? <Link to={'/login'}>Login here</Link>
+          <div className="form__footer--container">
+            <div className="form__footer--text">
+              Already have an account?
+            </div>
+            <Link className="form__footer--link" to={'/login'}>Login here</Link>
           </div>
         </>
       }

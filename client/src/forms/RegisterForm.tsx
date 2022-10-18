@@ -12,8 +12,8 @@ export const RegisterForm = () => {
       <div className='form__input--stacked-labels'>
         <label htmlFor="">
           <ul className='form__label--list'>
-            Create a password for your account
-            <li>Must be at least 6 characters</li>
+            Create a password for your account:
+            <li>Must be at least 6 characters.</li>
             <li>Must contain at least one (1) letter.</li>
             <li>Must contain at least one (1) number.</li>
           </ul>
