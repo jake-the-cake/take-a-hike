@@ -1,6 +1,7 @@
 import Express from 'express'
 import Mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import { returnErrorOnTerminal } from './common/consoleLogTerminal'
 import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
 import { ROUTER as UserRouter } from './routes/users/UserRoutes'
@@ -11,6 +12,7 @@ dotenv.config()
 
 APP.use(Express.json())
 APP.use(Express.urlencoded({ extended: false }))
+APP.use(cors())
 
 APP.use('/auth', AuthRouter)
 APP.use('/users', UserRouter)
