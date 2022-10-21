@@ -20,11 +20,19 @@ exports.ROUTER = express_1.default.Router();
 exports.ROUTER.get('/', (req, res) => {
     res.send('dont end up here');
 });
-exports.ROUTER.post('/login', (req, res) => {
+exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = {};
+    try {
+        const users = yield UserModel_1.UserModel.find();
+        console.log(users);
+    }
+    catch (err) {
+        console.error(data);
+    }
     res.status(201).json({
         request: req.body
     });
-});
+}));
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
     console.log(email);

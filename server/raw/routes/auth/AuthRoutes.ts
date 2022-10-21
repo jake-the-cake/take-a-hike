@@ -8,7 +8,17 @@ ROUTER.get('/', ( req: Request, res: Response ) => {
   res.send('dont end up here')
 })
 
-ROUTER.post('/login', ( req: Request, res: Response ) => {
+ROUTER.post('/login', async ( req: Request, res: Response ) => {
+  const data = {}
+  
+  try {
+    const users = await UserModel.find()
+    console.log(users)
+  }
+  catch ( err ) {
+    console.error(data)
+  }
+
   res.status(201).json({
     request: req.body
   })
