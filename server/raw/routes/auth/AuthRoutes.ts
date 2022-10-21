@@ -9,19 +9,36 @@ ROUTER.get('/', ( req: Request, res: Response ) => {
 })
 
 ROUTER.post('/login', async ( req: Request, res: Response ) => {
-  const data = {}
-  
+  const data = {
+    response: 'FAILURE',
+    message: ''
+  }
+  let responseStatus: number = 500
+  const { loginName, password } = req.body
   try {
     const users = await UserModel.find()
-    console.log(users)
+    users.forEach(( user ) => {
+      if ( user.username === loginName || user.email === loginName ) {
+        if ( password === user.password ) {
+          data.response = 'SUCCESS'
+          responseStatus = 201
+        }
+        else {
+          data.message = 'Invalid password entered'
+          responseStatus = 401
+        }
+      }
+      else {
+        data.message = 'User does not exist'
+        responseStatus = 403
+      }
+    })
   }
-  catch ( err ) {
-    console.error(data)
+  catch ( err: any ) {
+    data.message = 'An error has occured on the server'
+    console.error( err.message )
   }
-
-  res.status(201).json({
-    request: req.body
-  })
+  res.status( responseStatus ).json( data )
 })
 
 ROUTER.post('/register', async ( req: Request, res: Response ) => {
