@@ -1,17 +1,74 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { UseAxios } from "../hooks/UseAxios"
 
 interface RegistrationFormErrorProps {
   emailError?: string,
   usernameError?: string,
   passwordError?: string,
-  confirmEmailError?: string,
+  confirmPasswordError?: string,
   displayNameError?: string,
 }
 
 export const RegisterForm = () => {
   const [ errorMessage, setErrorMessage ]: [ RegistrationFormErrorProps, React.Dispatch<React.SetStateAction<RegistrationFormErrorProps>>] = useState({})
+  const navigate = useNavigate()
+  
+  const handleRegistration = async ( event: FormEvent ) => {
+    event.preventDefault()
+    const newUser = await UseAxios({
+      method: 'post',
+      path: '/auth/register',
+      data: {
+        email: ( document.getElementById('email-input') as HTMLInputElement ).value,
+        username: ( document.getElementById('username-input') as HTMLInputElement ).value,
+        password: ( document.getElementById('password-input') as HTMLInputElement ).value,
+        confirmedPassword: ( document.getElementById('confirm-password-input') as HTMLInputElement ).value,
+        displayName: ( document.getElementById('name-input') as HTMLInputElement ).value
+      }
+    }).then(( res ) => {
+      console.log(res.data)
+      return res.data
+    }).catch(( err ) => {
+      console.error(err.response.data.errors)
+      return err.response.data
+    })
+    
+    if ( newUser.errors ) {
+      const currentErrors: RegistrationFormErrorProps = {}
+      newUser.errors.forEach( ({ error }: any) => {
+        //
+        // can this be done cleaner?
+        //
+        switch ( error.errorAt ) {
+          case 'email':
+            currentErrors.emailError = error.message
+            break
+          case 'username':
+            currentErrors.usernameError = error.message
+            break
+          case 'password':
+            currentErrors.passwordError = error.message
+            break
+          case 'confirm-password':
+            currentErrors.confirmPasswordError = error.message
+            break
+          case 'name':
+            currentErrors.displayNameError = error.message
+            break
+          default:
+            break
+        }
+      })
+      setErrorMessage( currentErrors )
+    }
+    else {
+      navigate('./success')
+    }
+  }
+  
   return (
-    <form className='form__container' action="#">
+    <form className='form__container' action="#" onSubmit={ handleRegistration }>
       <div className='form__input--stacked-labels'>
         <label htmlFor="">What's your email address?</label>
         <input type="text" id='email-input' />
@@ -53,9 +110,9 @@ export const RegisterForm = () => {
         <label htmlFor="">Please verify that password below.</label>
         <input type="password" id='confirm-password-input' />
         {
-          errorMessage.confirmEmailError &&
+          errorMessage.confirmPasswordError &&
             <div className="form__error--message">
-              { errorMessage.confirmEmailError }
+              { errorMessage.confirmPasswordError }
             </div>
         }
       </div>
@@ -69,7 +126,9 @@ export const RegisterForm = () => {
             </div>
         }
       </div>
-      <button>Sign Up</button>
+      <button>
+        Sign Up
+      </button>
     </form>
   )
 }

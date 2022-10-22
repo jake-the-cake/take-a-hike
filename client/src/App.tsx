@@ -39,7 +39,10 @@ function App() {
       <TitleBar />
       <Routes>
         <Route path='/' element={ <Home /> } />
-        <Route path='/register' element={ <Register /> } />
+        <Route path='register'>
+          <Route path='' element={ <Register /> } />
+          <Route path='success' element={<>Success!</>} />
+        </Route>
         <Route path='/login' element={ <Login /> } />
         <Route path='hikes' >
           <Route path='' element={ <Hikes /> } />

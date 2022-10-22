@@ -9,17 +9,16 @@ export const LoginForm = () => {
   const handleLogin = async ( event: FormEvent ) => {
     event.preventDefault()
     await UseAxios({
+      method: 'post',
+      path: '/auth/login',
       data: {
         loginName: (document.getElementById('user-input') as HTMLInputElement).value,
         password: (document.getElementById('password-input') as HTMLInputElement).value
-      },
-      method: 'post',
-      path: '/auth/login'
+      }
     }).then( res => {
       setErrorMessage( res.data.message )
       navigate('/')
     }).catch(( err: any ) => {
-      console.error( err )
       setErrorMessage( err.response.data.message )
     })
   }

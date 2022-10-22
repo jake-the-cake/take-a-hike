@@ -115,3 +115,12 @@
 .form__footer--link:hover {
   opacity: .8;
 }
+
+.form__error--message {
+  color: var(--yellow_bartext);
+  font-weight: 700;
+  font-size: .8rem;
+  margin: auto;
+  text-align: center;
+  font-style: italic;
+}

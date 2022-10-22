@@ -55,18 +55,27 @@ exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
     console.log(email);
-    if (!email.error) {
+    const formErrors = [];
+    const formFields = [
+        email
+    ];
+    formFields.forEach((field) => {
+        console.log(field);
+        if (field.error)
+            formErrors.push(field);
+    });
+    if (formErrors.length === 0) {
         const newUserObject = {
-            username: req.body.username,
+            username: req.body.username || 'defaultuser',
             email: email.value,
-            password: req.body.password
+            password: req.body.password || 'Password1'
         };
-        const x = new UserModel_1.UserModel(newUserObject);
-        x.save();
+        const newUser = new UserModel_1.UserModel(newUserObject);
+        newUser.save();
         res.status(201).json(newUserObject);
     }
     else {
-        console.log(email.error);
-        res.status(401).json(email.error);
+        // console.log( email.error )
+        res.status(401).json({ errors: formErrors });
     }
 }));

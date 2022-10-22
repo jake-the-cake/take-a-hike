@@ -44,19 +44,27 @@ ROUTER.post('/login', async ( req: Request, res: Response ) => {
 ROUTER.post('/register', async ( req: Request, res: Response ) => {
   const email: ResponseObjectProps = await validateEmailAddress( req.body.email )
   console.log(email)
+  const formErrors: any[] = []
+  const formFields = [
+    email
+  ]
+  formFields.forEach(( field ) => {
+    console.log(field)
+    if ( field.error ) formErrors.push( field )
+  })
 
-  if ( !email.error ) {    
+  if ( formErrors.length === 0 ) {    
     const newUserObject = {
-      username: req.body.username,
+      username: req.body.username || 'defaultuser',
       email: email.value,
-      password: req.body.password
+      password: req.body.password || 'Password1'
     }
-    const x = new UserModel( newUserObject )
-    x.save()
+    const newUser = new UserModel( newUserObject )
+    newUser.save()
     res.status(201).json( newUserObject )
   }
   else {
-    console.log( email.error )
-    res.status(401).json( email.error )
+    // console.log( email.error )
+    res.status(401).json({ errors: formErrors })
   }
 })

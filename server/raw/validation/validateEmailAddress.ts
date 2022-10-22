@@ -4,6 +4,7 @@ import { UserModel } from "../models/UserModel"
 export interface ResponseObjectProps {
   error?: {
     type: string,
+    errorAt: string,
     message: string
   },
   value: string
@@ -24,6 +25,7 @@ export const validateEmailAt: ResponseObjectValidationFunctionProps = ( object, 
   if ( input.split('@').length !== 2 ) {
     object.error = {
       message: 'The value provided does not fit the required email format.',
+      errorAt: 'email',
       type: 'ValidationErr'
     }
     returnErrorOnTerminal( `${ object.error.type }: ${ object.error.message }` )
@@ -37,6 +39,7 @@ export const validateEmailDot: ResponseObjectValidationFunctionProps = ( object,
       if ( section.length === 0 ) {
         object.error = {
           message: 'The value provided does not fit the required email format.',
+          errorAt: 'email',
           type: 'ValidationErr'
         }
       }
@@ -49,6 +52,7 @@ export const validateUniqueInput: ResponseObjectValidationFunctionProps = async 
   if ( await UserModel.findOne({ email: input }) ) {
     object.error = {
       message: 'The value provided has already been used.',
+      errorAt: 'email',
       type: 'DuplicatationErr'
     }
   }
@@ -62,22 +66,9 @@ export const validateEmailAddress: StringValidationFunctionProps = async ( input
   }
 
   // run validation functions
-  const runValidation = async ( callbacks: ResponseObjectValidationFunctionProps[] ) => {
-    callbacks.forEach( async ( callback, index ) => {
-      if ( index !== 2 ) {
-        await callback( responseObject, responseObject.value )
-      }
-    })
-  }
-  runValidation([
-    validateEmailAt,
-    validateEmailDot,
-    validateUniqueInput
-  ])
-
-  // validateEmailAt( responseObject, responseObject.value )
-  // validateEmailDot( responseObject, responseObject.value )
-  // await validateUniqueInput( responseObject, responseObject.value )
+  validateEmailAt( responseObject, responseObject.value )
+  validateEmailDot( responseObject, responseObject.value )
+  await validateUniqueInput( responseObject, responseObject.value )
 
   // if no errors, return original value inside of response object
   return responseObject
