@@ -46,7 +46,7 @@ export const validateEmailDot: ResponseObjectValidationFunctionProps = ( object,
 }
 
 export const validateUniqueInput: ResponseObjectValidationFunctionProps = async ( object, input ) => {
-  if ( await UserModel.findOne( { email: input }) ) {
+  if ( await UserModel.findOne({ email: input }) ) {
     object.error = {
       message: 'The value provided has already been used.',
       type: 'DuplicatationErr'
@@ -62,9 +62,22 @@ export const validateEmailAddress: StringValidationFunctionProps = async ( input
   }
 
   // run validation functions
-  validateEmailAt( responseObject, responseObject.value )
-  validateEmailDot( responseObject, responseObject.value )
-  await validateUniqueInput( responseObject, responseObject.value )
+  const runValidation = async ( callbacks: ResponseObjectValidationFunctionProps[] ) => {
+    callbacks.forEach( async ( callback, index ) => {
+      if ( index !== 2 ) {
+        await callback( responseObject, responseObject.value )
+      }
+    })
+  }
+  runValidation([
+    validateEmailAt,
+    validateEmailDot,
+    validateUniqueInput
+  ])
+
+  // validateEmailAt( responseObject, responseObject.value )
+  // validateEmailDot( responseObject, responseObject.value )
+  // await validateUniqueInput( responseObject, responseObject.value )
 
   // if no errors, return original value inside of response object
   return responseObject

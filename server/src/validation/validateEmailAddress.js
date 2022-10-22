@@ -51,9 +51,21 @@ const validateEmailAddress = (input) => __awaiter(void 0, void 0, void 0, functi
         value: input.trim()
     };
     // run validation functions
-    (0, exports.validateEmailAt)(responseObject, responseObject.value);
-    (0, exports.validateEmailDot)(responseObject, responseObject.value);
-    yield (0, exports.validateUniqueInput)(responseObject, responseObject.value);
+    const runValidation = (callbacks) => __awaiter(void 0, void 0, void 0, function* () {
+        callbacks.forEach((callback, index) => __awaiter(void 0, void 0, void 0, function* () {
+            if (index !== 2) {
+                yield callback(responseObject, responseObject.value);
+            }
+        }));
+    });
+    runValidation([
+        exports.validateEmailAt,
+        exports.validateEmailDot,
+        exports.validateUniqueInput
+    ]);
+    // validateEmailAt( responseObject, responseObject.value )
+    // validateEmailDot( responseObject, responseObject.value )
+    // await validateUniqueInput( responseObject, responseObject.value )
     // if no errors, return original value inside of response object
     return responseObject;
 });

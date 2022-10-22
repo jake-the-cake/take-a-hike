@@ -1,6 +1,6 @@
-import axios from "axios"
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { UseAxios } from "../hooks/UseAxios"
 
 export const LoginForm = () => {
   const [ errorMessage, setErrorMessage ]: [string , React.Dispatch<React.SetStateAction<string>>] = useState('')
@@ -8,13 +8,17 @@ export const LoginForm = () => {
 
   const handleLogin = async ( event: FormEvent ) => {
     event.preventDefault()
-    await axios.post('http://localhost:4200/auth/login', {
-      loginName: (document.getElementById('user-input') as HTMLInputElement).value,
-      password: (document.getElementById('password-input') as HTMLInputElement).value
+    await UseAxios({
+      data: {
+        loginName: (document.getElementById('user-input') as HTMLInputElement).value,
+        password: (document.getElementById('password-input') as HTMLInputElement).value
+      },
+      method: 'post',
+      path: '/auth/login'
     }).then( res => {
       setErrorMessage( res.data.message )
       navigate('/')
-    } ).catch(( err: any ) => {
+    }).catch(( err: any ) => {
       console.error( err )
       setErrorMessage( err.response.data.message )
     })
@@ -32,7 +36,7 @@ export const LoginForm = () => {
       </div>
       {
         errorMessage &&
-          <div>
+          <div className="form__error--message">
             { errorMessage }
           </div>
       }
