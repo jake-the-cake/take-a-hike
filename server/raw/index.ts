@@ -5,6 +5,7 @@ import cors from 'cors'
 import { returnErrorOnTerminal } from './common/consoleLogTerminal'
 import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
 import { ROUTER as UserRouter } from './routes/users/UserRoutes'
+import { consoleLogEndpoints } from './common/consoleLogEndpoints'
 
 const APP = Express()
 const DEFAULT_PORT: number = 4201
@@ -17,8 +18,19 @@ APP.use(cors())
 APP.use('/auth', AuthRouter)
 APP.use('/users', UserRouter)
 
-APP.get('*', ( req: any, res: any ) => {
-  res.send('404')  
+APP.get('/', ( req: any, res: any ) => {
+  consoleLogEndpoints( req.body, req.originalUrl, req.method )
+  res.status(200).json({
+    response: 'You have found my API!'
+  })
+})
+
+/*
+  ::: 404 on any bad routes
+*/
+APP.get('/*', ( req: any, res: any ) => {
+  consoleLogEndpoints( req.body, req.originalUrl, req.method )
+  res.status(404).json({ error: 'page not found' })
 })
 
 /*
@@ -41,9 +53,9 @@ APP.listen(
   process.env.PORT || DEFAULT_PORT,
   function ( this: any ) {
     const activePort = this.address().port
-    console.log(`Server is live on port ${ activePort }`)
+    console.log( `Server is live on port ${ activePort }` )
     if ( activePort === DEFAULT_PORT ) {
-      returnErrorOnTerminal('Default port in use... check settings')
+      returnErrorOnTerminal( 'Default port in use... check settings' )
     }
   }
 )

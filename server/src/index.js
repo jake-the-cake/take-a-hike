@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const consoleLogTerminal_1 = require("./common/consoleLogTerminal");
 const AuthRoutes_1 = require("./routes/auth/AuthRoutes");
 const UserRoutes_1 = require("./routes/users/UserRoutes");
+const consoleLogEndpoints_1 = require("./common/consoleLogEndpoints");
 const APP = (0, express_1.default)();
 const DEFAULT_PORT = 4201;
 dotenv_1.default.config();
@@ -18,8 +19,18 @@ APP.use(express_1.default.urlencoded({ extended: false }));
 APP.use((0, cors_1.default)());
 APP.use('/auth', AuthRoutes_1.ROUTER);
 APP.use('/users', UserRoutes_1.ROUTER);
-APP.get('*', (req, res) => {
-    res.send('404');
+APP.get('/', (req, res) => {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
+    res.status(200).json({
+        response: 'You have found my API!'
+    });
+});
+/*
+  ::: 404 on any bad routes
+*/
+APP.get('/*', (req, res) => {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
+    res.status(404).json({ error: 'page not found' });
 });
 /*
   ::: Connect to database

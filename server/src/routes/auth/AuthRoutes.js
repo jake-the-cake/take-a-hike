@@ -14,13 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ROUTER = void 0;
 const express_1 = __importDefault(require("express"));
+const consoleLogEndpoints_1 = require("../../common/consoleLogEndpoints");
+const consoleLogTerminal_1 = require("../../common/consoleLogTerminal");
 const UserModel_1 = require("../../models/UserModel");
 const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
 exports.ROUTER = express_1.default.Router();
-exports.ROUTER.get('/', (req, res) => {
-    res.send('dont end up here');
-});
+const ROUTE_BASE = '/auth';
 exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const data = {
         response: 'FAILURE',
         message: ''
@@ -53,14 +54,13 @@ exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, fu
     res.status(responseStatus).json(data);
 }));
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
-    console.log(email);
     const formErrors = [];
     const formFields = [
         email
     ];
     formFields.forEach((field) => {
-        console.log(field);
         if (field.error)
             formErrors.push(field);
     });
@@ -72,6 +72,7 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
         };
         const newUser = new UserModel_1.UserModel(newUserObject);
         newUser.save();
+        (0, consoleLogTerminal_1.returnInfoOnTerminal)(`User ${newUser.username} has been successfully registered.`);
         res.status(201).json(newUserObject);
     }
     else {

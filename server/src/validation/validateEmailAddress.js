@@ -32,6 +32,7 @@ const validateEmailDot = (object, input) => {
                 errorAt: 'email',
                 type: 'ValidationErr'
             };
+            (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${object.error.type}: ${object.error.message}`);
         }
     });
     return object;
@@ -40,10 +41,11 @@ exports.validateEmailDot = validateEmailDot;
 const validateUniqueInput = (object, input) => __awaiter(void 0, void 0, void 0, function* () {
     if (yield UserModel_1.UserModel.findOne({ email: input })) {
         object.error = {
-            message: 'The value provided has already been used.',
+            message: `'${input}' has already been used.`,
             errorAt: 'email',
             type: 'DuplicatationErr'
         };
+        (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${object.error.type}: ${object.error.message}`);
     }
     return object;
 });

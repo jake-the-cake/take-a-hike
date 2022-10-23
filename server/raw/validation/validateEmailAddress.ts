@@ -42,6 +42,7 @@ export const validateEmailDot: ResponseObjectValidationFunctionProps = ( object,
           errorAt: 'email',
           type: 'ValidationErr'
         }
+        returnErrorOnTerminal( `${ object.error.type }: ${ object.error.message }` )
       }
     }
   )
@@ -51,10 +52,11 @@ export const validateEmailDot: ResponseObjectValidationFunctionProps = ( object,
 export const validateUniqueInput: ResponseObjectValidationFunctionProps = async ( object, input ) => {
   if ( await UserModel.findOne({ email: input }) ) {
     object.error = {
-      message: 'The value provided has already been used.',
+      message: `'${ input }' has already been used.`,
       errorAt: 'email',
       type: 'DuplicatationErr'
     }
+    returnErrorOnTerminal( `${ object.error.type }: ${ object.error.message }` )
   }
   return object
 }

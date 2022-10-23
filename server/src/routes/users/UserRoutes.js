@@ -14,12 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ROUTER = void 0;
 const express_1 = __importDefault(require("express"));
+const consoleLogEndpoints_1 = require("../../common/consoleLogEndpoints");
 const UserModel_1 = require("../../models/UserModel");
 exports.ROUTER = express_1.default.Router();
-exports.ROUTER.get('/', (req, res) => {
-    res.send('dont end up here');
-});
 exports.ROUTER.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const data = yield UserModel_1.UserModel.find();
     res.status(200).json({
         data
