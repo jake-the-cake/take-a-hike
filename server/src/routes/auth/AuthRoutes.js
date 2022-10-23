@@ -63,7 +63,18 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
     const username = yield (0, validateUsername_1.validateUserName)(req.body.username);
     const password = yield (0, validatePassword_1.validatePassword)(req.body.password);
+    const confirmError = {
+        value: '',
+        error: {
+            message: `Password not confirmed.`,
+            errorAt: 'confirm-password',
+            type: 'AuthErr'
+        }
+    };
     const formErrors = [];
+    if (req.body.password !== req.body.confirmedPassword) {
+        formErrors.push(confirmError);
+    }
     const formFields = [
         email,
         username,
@@ -75,9 +86,10 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
     });
     if (formErrors.length === 0) {
         const newUserObject = {
-            username: req.body.username || 'defaultuser',
+            username: username.value,
             email: email.value,
-            password: req.body.password || 'Password1'
+            password: password.value,
+            nickname: req.body.displayName
         };
         const newUser = new UserModel_1.UserModel(newUserObject);
         newUser.save();
@@ -85,7 +97,9 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(201).json(newUserObject);
     }
     else {
-        // console.log( email.error )
+        if (formErrors.filter((err) => { var _a; return ((_a = err.error) === null || _a === void 0 ? void 0 : _a.type) === 'AuthErr'; }).length === 1) {
+            (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${confirmError.error.type}: ${confirmError.error.message} < @${confirmError.error.errorAt} >`);
+        }
         res.status(401).json({ errors: formErrors });
     }
 }));

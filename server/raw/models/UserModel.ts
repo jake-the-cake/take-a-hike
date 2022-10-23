@@ -14,7 +14,8 @@ const User = new Mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  nickname: String
 }, { timestamps: true })
 
 export const UserModel = Mongoose.model('UserModel', User)

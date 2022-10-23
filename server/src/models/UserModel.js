@@ -19,6 +19,7 @@ const User = new mongoose_1.default.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    nickname: String
 }, { timestamps: true });
 exports.UserModel = mongoose_1.default.model('UserModel', User);

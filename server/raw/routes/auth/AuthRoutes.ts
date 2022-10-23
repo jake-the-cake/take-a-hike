@@ -1,6 +1,6 @@
 import Express, { Request, Response } from 'express'
 import { consoleLogEndpoints } from '../../common/consoleLogEndpoints'
-import { returnInfoOnTerminal } from '../../common/consoleLogTerminal'
+import { returnErrorOnTerminal, returnInfoOnTerminal } from '../../common/consoleLogTerminal'
 import { UserModel } from '../../models/UserModel'
 import { validateEmailAddress } from '../../validation/validateEmailAddress'
 import { ResponseObjectProps } from '../../packages/validata/validationProps'
@@ -52,7 +52,18 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
   const email: ResponseObjectProps = await validateEmailAddress( req.body.email )
   const username: ResponseObjectProps = await validateUserName( req.body.username )
   const password: ResponseObjectProps = await validatePassword( req.body.password )
+  const confirmError ={
+    value: '',
+    error: {
+      message: `Password not confirmed.`,
+      errorAt: 'confirm-password',
+      type: 'AuthErr'
+    }
+  }
   const formErrors: any[] = []
+  if ( req.body.password !== req.body.confirmedPassword ) {
+    formErrors.push( confirmError )
+  }
   const formFields = [
     email,
     username,
@@ -61,12 +72,12 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
   formFields.forEach(( field ) => {
     if ( field.error ) formErrors.push( field )
   })
-
   if ( formErrors.length === 0 ) {    
     const newUserObject = {
-      username: req.body.username || 'defaultuser',
+      username: username.value,
       email: email.value,
-      password: req.body.password || 'Password1'
+      password: password.value,
+      nickname: req.body.displayName
     }
     const newUser = new UserModel( newUserObject )
     newUser.save()
@@ -74,7 +85,9 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
     res.status(201).json( newUserObject )
   }
   else {
-    // console.log( email.error )
+    if ( formErrors.filter(( err: ResponseObjectProps ) => err.error?.type === 'AuthErr' ).length === 1 ) {
+      returnErrorOnTerminal( `${ confirmError.error!.type }: ${ confirmError.error!.message } < @${ confirmError.error.errorAt } >` )
+    }
     res.status(401).json({ errors: formErrors })
   }
 })

@@ -75,21 +75,7 @@ class StringValidation {
         const { packages, chars } = args;
         let allowedCharacters = '';
         packages && packages.forEach((pack) => {
-            switch (pack) {
-                case 'upper':
-                    allowedCharacters += 'A-Z';
-                    break;
-                case 'lower':
-                    allowedCharacters += 'a-z';
-                    break;
-                case 'digit':
-                    allowedCharacters += '0-9';
-                    break;
-                case 'all':
-                    allowedCharacters += 'A-Za-z0-9';
-                default:
-                    break;
-            }
+            allowedCharacters = this.buildRegExp(pack, allowedCharacters);
         });
         if (chars)
             allowedCharacters += chars;
@@ -108,16 +94,7 @@ class StringValidation {
         const { packages, chars } = args;
         packages && packages.forEach((pack) => {
             let requiredCharacters = '';
-            switch (pack) {
-                case 'letter':
-                    requiredCharacters += 'A-Za-z';
-                    break;
-                case 'digit':
-                    requiredCharacters += '0-9';
-                    break;
-                default:
-                    break;
-            }
+            requiredCharacters = this.buildRegExp(pack, requiredCharacters);
             const regExp = new RegExp(`^(.*[${requiredCharacters}].*)$`);
             if (this.obj.value.match(regExp) === null) {
                 this.obj.error = {
@@ -128,6 +105,28 @@ class StringValidation {
             }
         });
         return this.obj;
+    }
+    buildRegExp(pack, characterString) {
+        switch (pack) {
+            case 'letter':
+                characterString += 'A-Za-z';
+                break;
+            case 'upper':
+                characterString += 'A-Z';
+                break;
+            case 'lower':
+                characterString += 'a-z';
+                break;
+            case 'all':
+                characterString += 'A-Za-z0-9';
+                break;
+            case 'digit':
+                characterString += '0-9';
+                break;
+            default:
+                break;
+        }
+        return characterString;
     }
 }
 exports.StringValidation = StringValidation;

@@ -70,24 +70,10 @@ export class StringValidation {
   // characters allowed
   canContain ( args: { packages?: string[], chars?: string }) {
     const { packages, chars } = args
-    let allowedCharacters: string | undefined = ''
+    let allowedCharacters: string = ''
 
     packages && packages.forEach(( pack: string ) => {
-      switch ( pack ) {
-        case 'upper':
-          allowedCharacters += 'A-Z'
-          break
-        case 'lower':
-          allowedCharacters += 'a-z'
-          break
-        case 'digit':
-          allowedCharacters += '0-9'
-          break
-        case 'all':
-          allowedCharacters += 'A-Za-z0-9'
-        default:
-          break
-      }
+      allowedCharacters = this.buildRegExp( pack, allowedCharacters )
     })
 
     if ( chars ) allowedCharacters += chars
@@ -107,17 +93,8 @@ export class StringValidation {
   mustContain ( args: { packages?: string[], chars?: string }) {
     const { packages, chars } = args
     packages && packages.forEach(( pack: string ) => {
-      let requiredCharacters: string | undefined = ''
-      switch ( pack ) {
-        case 'letter':
-          requiredCharacters += 'A-Za-z'
-          break
-        case 'digit':
-          requiredCharacters += '0-9'
-          break
-        default:
-          break
-      }
+      let requiredCharacters: string = ''
+      requiredCharacters = this.buildRegExp( pack, requiredCharacters )
       const regExp = new RegExp(`^(.*[${ requiredCharacters }].*)$`)
       if ( this.obj.value.match( regExp ) === null ) {
         this.obj.error = {
@@ -127,7 +104,29 @@ export class StringValidation {
         }
       }
     })
-    
     return this.obj
+  }
+
+  private buildRegExp ( pack: string, characterString: string ) {
+    switch ( pack ) {
+      case 'letter':
+        characterString += 'A-Za-z'
+        break
+      case 'upper':
+        characterString += 'A-Z'
+        break
+      case 'lower':
+        characterString += 'a-z'
+        break
+      case 'all':
+        characterString += 'A-Za-z0-9'
+        break
+      case 'digit':
+        characterString += '0-9'
+        break
+      default:
+        break
+    }
+    return characterString
   }
 }
