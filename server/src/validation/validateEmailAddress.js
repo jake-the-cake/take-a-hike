@@ -9,57 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateEmailAddress = exports.validateUniqueInput = exports.validateEmailDot = exports.validateEmailAt = void 0;
-const consoleLogTerminal_1 = require("../common/consoleLogTerminal");
+exports.validateEmailAddress = void 0;
 const UserModel_1 = require("../models/UserModel");
-const validateEmailAt = (object, input) => {
-    if (input.split('@').length !== 2) {
-        object.error = {
-            message: 'The value provided does not fit the required email format.',
-            errorAt: 'email',
-            type: 'ValidationErr'
-        };
-        (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${object.error.type}: ${object.error.message}`);
-    }
-    return object;
-};
-exports.validateEmailAt = validateEmailAt;
-const validateEmailDot = (object, input) => {
-    input.split('.').forEach((section) => {
-        if (section.length === 0) {
-            object.error = {
-                message: 'The value provided does not fit the required email format.',
-                errorAt: 'email',
-                type: 'ValidationErr'
-            };
-            (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${object.error.type}: ${object.error.message}`);
-        }
-    });
-    return object;
-};
-exports.validateEmailDot = validateEmailDot;
-const validateUniqueInput = (object, input) => __awaiter(void 0, void 0, void 0, function* () {
-    if (yield UserModel_1.UserModel.findOne({ email: input })) {
-        object.error = {
-            message: `'${input}' has already been used.`,
-            errorAt: 'email',
-            type: 'DuplicatationErr'
-        };
-        (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${object.error.type}: ${object.error.message}`);
-    }
-    return object;
-});
-exports.validateUniqueInput = validateUniqueInput;
+const emailValidation_1 = require("../packages/validata/emailValidation");
 const validateEmailAddress = (input) => __awaiter(void 0, void 0, void 0, function* () {
     // create an object that contains original value, trimmed
     const responseObject = {
         value: input.trim()
     };
+    // create instance of EmailValidation class
+    const objectBeingValidated = new emailValidation_1.EmailValidation(responseObject, 'email');
     // run validation functions
-    (0, exports.validateEmailAt)(responseObject, responseObject.value);
-    (0, exports.validateEmailDot)(responseObject, responseObject.value);
-    yield (0, exports.validateUniqueInput)(responseObject, responseObject.value);
-    // if no errors, return original value inside of response object
-    return responseObject;
+    objectBeingValidated.emailDot();
+    objectBeingValidated.emailAt();
+    objectBeingValidated.hasValue();
+    yield objectBeingValidated.isUnique(UserModel_1.UserModel);
+    // log any errors
+    if (objectBeingValidated.obj.error !== undefined)
+        objectBeingValidated.errorLog();
+    console.log(objectBeingValidated.obj);
+    // return validation object
+    return objectBeingValidated.obj;
 });
 exports.validateEmailAddress = validateEmailAddress;

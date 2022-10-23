@@ -19,7 +19,6 @@ const consoleLogTerminal_1 = require("../../common/consoleLogTerminal");
 const UserModel_1 = require("../../models/UserModel");
 const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
 exports.ROUTER = express_1.default.Router();
-const ROUTE_BASE = '/auth';
 exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const data = {

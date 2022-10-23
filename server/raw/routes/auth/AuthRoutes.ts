@@ -2,11 +2,10 @@ import Express, { Request, Response } from 'express'
 import { consoleLogEndpoints } from '../../common/consoleLogEndpoints'
 import { returnInfoOnTerminal } from '../../common/consoleLogTerminal'
 import { UserModel } from '../../models/UserModel'
-import { ResponseObjectProps, validateEmailAddress } from '../../validation/validateEmailAddress'
+import { validateEmailAddress } from '../../validation/validateEmailAddress'
+import { ResponseObjectProps } from '../../validation/validationProps'
 
 export const ROUTER = Express.Router()
-
-const ROUTE_BASE = '/auth'
 
 ROUTER.post('/login', async ( req: Request, res: Response ) => {
   consoleLogEndpoints( req.body, req.originalUrl, req.method )
