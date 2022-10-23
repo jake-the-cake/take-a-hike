@@ -9,17 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateEmailAddress = void 0;
+exports.validateUserName = void 0;
 const UserModel_1 = require("../models/UserModel");
-const emailValidation_1 = require("../packages/validata/emailValidation");
-const validateEmailAddress = (input) => __awaiter(void 0, void 0, void 0, function* () {
-    // create instance of EmailValidation class
-    const objectBeingValidated = new emailValidation_1.EmailValidation(input, 'email');
+const stringValidation_1 = require("../packages/validata/stringValidation");
+const validateUserName = (input) => __awaiter(void 0, void 0, void 0, function* () {
+    // create instance of StringValidation class
+    const objectBeingValidated = new stringValidation_1.StringValidation(input, 'username');
     // run validation functions
-    objectBeingValidated.hasDots();
-    objectBeingValidated.hasOneAt();
-    objectBeingValidated.hasNoSpaces();
     objectBeingValidated.hasValue();
+    objectBeingValidated.stringLength(6, 15);
+    objectBeingValidated.hasNoSpaces();
+    objectBeingValidated.canContain({
+        packages: [
+            'all'
+        ],
+        chars: '-_.'
+    });
     yield objectBeingValidated.isUnique(UserModel_1.UserModel);
     // log any errors
     if (objectBeingValidated.obj.error !== undefined)
@@ -27,4 +32,4 @@ const validateEmailAddress = (input) => __awaiter(void 0, void 0, void 0, functi
     // return validation object
     return objectBeingValidated.obj;
 });
-exports.validateEmailAddress = validateEmailAddress;
+exports.validateUserName = validateUserName;

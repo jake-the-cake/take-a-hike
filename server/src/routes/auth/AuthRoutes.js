@@ -18,6 +18,8 @@ const consoleLogEndpoints_1 = require("../../common/consoleLogEndpoints");
 const consoleLogTerminal_1 = require("../../common/consoleLogTerminal");
 const UserModel_1 = require("../../models/UserModel");
 const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
+const validateUsername_1 = require("../../validation/validateUsername");
+const validatePassword_1 = require("../../validation/validatePassword");
 exports.ROUTER = express_1.default.Router();
 exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
@@ -26,23 +28,27 @@ exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, fu
         message: ''
     };
     let responseStatus = 500;
+    let found = false;
     const { loginName, password } = req.body;
     try {
         const users = yield UserModel_1.UserModel.find();
         users.forEach((user) => {
-            if (user.username === loginName || user.email === loginName) {
-                if (password === user.password) {
-                    data.response = 'SUCCESS';
-                    responseStatus = 201;
+            if (found === false) {
+                if (user.username === loginName || user.email === loginName) {
+                    found = true;
+                    if (password === user.password) {
+                        data.response = 'SUCCESS';
+                        responseStatus = 201;
+                    }
+                    else {
+                        data.message = 'Invalid password entered';
+                        responseStatus = 401;
+                    }
                 }
                 else {
-                    data.message = 'Invalid password entered';
-                    responseStatus = 401;
+                    data.message = 'User does not exist';
+                    responseStatus = 403;
                 }
-            }
-            else {
-                data.message = 'User does not exist';
-                responseStatus = 403;
             }
         });
     }
@@ -55,9 +61,13 @@ exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);
+    const username = yield (0, validateUsername_1.validateUserName)(req.body.username);
+    const password = yield (0, validatePassword_1.validatePassword)(req.body.password);
     const formErrors = [];
     const formFields = [
-        email
+        email,
+        username,
+        password
     ];
     formFields.forEach((field) => {
         if (field.error)

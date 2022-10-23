@@ -3,7 +3,9 @@ import { consoleLogEndpoints } from '../../common/consoleLogEndpoints'
 import { returnInfoOnTerminal } from '../../common/consoleLogTerminal'
 import { UserModel } from '../../models/UserModel'
 import { validateEmailAddress } from '../../validation/validateEmailAddress'
-import { ResponseObjectProps } from '../../validation/validationProps'
+import { ResponseObjectProps } from '../../packages/validata/validationProps'
+import { validateUserName } from '../../validation/validateUsername'
+import { validatePassword } from '../../validation/validatePassword'
 
 export const ROUTER = Express.Router()
 
@@ -14,23 +16,27 @@ ROUTER.post('/login', async ( req: Request, res: Response ) => {
     message: ''
   }
   let responseStatus: number = 500
+  let found: boolean = false
   const { loginName, password } = req.body
   try {
     const users = await UserModel.find()
     users.forEach(( user ) => {
-      if ( user.username === loginName || user.email === loginName ) {
-        if ( password === user.password ) {
-          data.response = 'SUCCESS'
-          responseStatus = 201
+      if ( found === false ) {    
+        if ( user.username === loginName || user.email === loginName ) {
+          found = true
+          if ( password === user.password ) {
+            data.response = 'SUCCESS'
+            responseStatus = 201
+          }
+          else {
+            data.message = 'Invalid password entered'
+            responseStatus = 401
+          }
         }
         else {
-          data.message = 'Invalid password entered'
-          responseStatus = 401
+          data.message = 'User does not exist'
+          responseStatus = 403
         }
-      }
-      else {
-        data.message = 'User does not exist'
-        responseStatus = 403
       }
     })
   }
@@ -44,9 +50,13 @@ ROUTER.post('/login', async ( req: Request, res: Response ) => {
 ROUTER.post('/register', async ( req: Request, res: Response ) => {
   consoleLogEndpoints( req.body, req.originalUrl, req.method )
   const email: ResponseObjectProps = await validateEmailAddress( req.body.email )
+  const username: ResponseObjectProps = await validateUserName( req.body.username )
+  const password: ResponseObjectProps = await validatePassword( req.body.password )
   const formErrors: any[] = []
   const formFields = [
-    email
+    email,
+    username,
+    password
   ]
   formFields.forEach(( field ) => {
     if ( field.error ) formErrors.push( field )

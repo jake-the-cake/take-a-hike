@@ -1,10 +1,10 @@
-import { ResponseObjectProps } from "../../validation/validationProps"
+import { ResponseObjectProps } from "./validationProps"
 import { StringValidation } from "./stringValidation"
 
 export class EmailValidation extends StringValidation {
 
-  // can have more than one dot, but not in a row
-  emailDot: () => ResponseObjectProps = () => {
+  // must have dot(s) -- can have more than one dot, but not in a row
+  hasDots: () => ResponseObjectProps = () => {
     this.obj.value.split('.').forEach(
       ( section: string ) => {
         if ( section.length === 0 ) {
@@ -20,7 +20,7 @@ export class EmailValidation extends StringValidation {
   }
 
   // must have exactly 1 @ symbol
-  emailAt: () => ResponseObjectProps = () => {
+  hasOneAt: () => ResponseObjectProps = () => {
     if ( this.obj.value.split('@').length !== 2 ) {
       this.obj.error = {
         message: 'Invalid email format.',
@@ -30,4 +30,10 @@ export class EmailValidation extends StringValidation {
     }
     return this.obj
   }
+
+
+
+  // must contain no other special characters
+
+
 }
