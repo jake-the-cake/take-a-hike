@@ -52,7 +52,7 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
   const email: ResponseObjectProps = await validateEmailAddress( req.body.email )
   const username: ResponseObjectProps = await validateUserName( req.body.username )
   const password: ResponseObjectProps = await validatePassword( req.body.password )
-  const confirmError ={
+  const confirmError = {
     value: '',
     error: {
       message: `Password not confirmed.`,
@@ -61,7 +61,7 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
     }
   }
   const formErrors: any[] = []
-  if ( req.body.password !== req.body.confirmedPassword ) {
+  if ( req.body.password !== req.body.confirmedPassword && req.body.confirmedPassword !== 'yes' ) {
     formErrors.push( confirmError )
   }
   const formFields = [
@@ -85,7 +85,7 @@ ROUTER.post('/register', async ( req: Request, res: Response ) => {
     res.status(201).json( newUserObject )
   }
   else {
-    if ( formErrors.filter(( err: ResponseObjectProps ) => err.error?.type === 'AuthErr' ).length === 1 ) {
+    if ( formErrors.filter(( err: ResponseObjectProps ) => err.error?.errorAt === 'confirm-password' ).length === 1 ) {
       returnErrorOnTerminal( `${ confirmError.error!.type }: ${ confirmError.error!.message } < @${ confirmError.error.errorAt } >` )
     }
     res.status(401).json({ errors: formErrors })

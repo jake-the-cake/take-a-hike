@@ -72,7 +72,7 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
         }
     };
     const formErrors = [];
-    if (req.body.password !== req.body.confirmedPassword) {
+    if (req.body.password !== req.body.confirmedPassword && req.body.confirmedPassword !== 'yes') {
         formErrors.push(confirmError);
     }
     const formFields = [
@@ -97,7 +97,7 @@ exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(201).json(newUserObject);
     }
     else {
-        if (formErrors.filter((err) => { var _a; return ((_a = err.error) === null || _a === void 0 ? void 0 : _a.type) === 'AuthErr'; }).length === 1) {
+        if (formErrors.filter((err) => { var _a; return ((_a = err.error) === null || _a === void 0 ? void 0 : _a.errorAt) === 'confirm-password'; }).length === 1) {
             (0, consoleLogTerminal_1.returnErrorOnTerminal)(`${confirmError.error.type}: ${confirmError.error.message} < @${confirmError.error.errorAt} >`);
         }
         res.status(401).json({ errors: formErrors });

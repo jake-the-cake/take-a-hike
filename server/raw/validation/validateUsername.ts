@@ -7,9 +7,9 @@ export const validateUserName: StringValidationFunctionProps = async ( input ) =
     const objectBeingValidated = new StringValidation( input, 'username' )
     
     // run validation functions
-    objectBeingValidated.hasValue()
     objectBeingValidated.stringLength( 6, 15 )
     objectBeingValidated.hasNoSpaces()
+    objectBeingValidated.hasValue()
     objectBeingValidated.canContain( {
       packages: [
         'all'

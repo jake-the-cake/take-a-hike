@@ -61,14 +61,14 @@ class StringValidation {
     }
     // set min and max string length
     stringLength(min, max = 50) {
-        if (this.obj.value.length < min || (max && this.obj.value.length > max)) {
+        if (this.obj.value.length < min || (this.obj.value.length > max)) {
             this.obj.error = {
                 message: `Must be between ${min} and ${max} characters.`,
                 errorAt: this.errorAt,
                 type: 'SyntaxErr'
             };
-            return this.obj;
         }
+        return this.obj;
     }
     // characters allowed
     canContain(args) {

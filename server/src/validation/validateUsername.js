@@ -16,9 +16,9 @@ const validateUserName = (input) => __awaiter(void 0, void 0, void 0, function* 
     // create instance of StringValidation class
     const objectBeingValidated = new stringValidation_1.StringValidation(input, 'username');
     // run validation functions
-    objectBeingValidated.hasValue();
     objectBeingValidated.stringLength(6, 15);
     objectBeingValidated.hasNoSpaces();
+    objectBeingValidated.hasValue();
     objectBeingValidated.canContain({
         packages: [
             'all'

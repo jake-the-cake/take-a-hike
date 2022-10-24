@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@types/cors": "^2.8.12",
+    "@types/crypto-js": "^4.1.1",
     "axios": "^1.1.2",
     "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "mongoose": "^6.6.5"

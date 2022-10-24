@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UseAxios } from "../hooks/UseAxios"
+import AES from 'crypto-js/aes'
 
 interface RegistrationFormErrorProps {
   emailError?: string,
@@ -16,14 +17,58 @@ export const RegisterForm = () => {
   
   const handleRegistration = async ( event: FormEvent ) => {
     event.preventDefault()
+
+    interface PasswordValidationProps {
+      () : {
+        hashedValue: string,
+        matchedValue: string
+      }
+    }
+
+    const passwordValidation: PasswordValidationProps = () => {
+      const originalPassword = ( document.getElementById('password-input') as HTMLInputElement ).value
+      const confirmedPassword = ( document.getElementById('confirm-password-input') as HTMLInputElement ).value
+      const hashedPassword = AES.encrypt( originalPassword, process.env.REACT_APP_ENCRYPTION_KEY as string ).toString()
+      const returnValues = {
+        hashedValue: '',
+        matchedValue: ''
+      }
+
+      if ( originalPassword !== confirmedPassword ) {
+        returnValues.hashedValue = hashedPassword
+        returnValues.matchedValue = 'x'
+      }
+      else if ( originalPassword === '' ) {
+        console.log('no password')
+      }
+      else if ( originalPassword.split(' ').length > 1 ) {
+        returnValues.hashedValue = 'x 1'
+        returnValues.matchedValue = 'x 1'
+      }
+      else if ( originalPassword.length < 6 ) {
+        returnValues.hashedValue = 'x1'
+        returnValues.matchedValue = 'x1'
+      }
+      else if ( originalPassword.match(/^(-*[\d].*)$/) === null || originalPassword.match(/^(.*[A-Za-z].*)$/) === null ) {
+        returnValues.hashedValue = 'x'
+        returnValues.matchedValue = 'x'
+      }
+      else {
+        returnValues.hashedValue = hashedPassword
+        returnValues.matchedValue = 'yes'
+      }
+
+      return returnValues
+    }
+
     const newUser = await UseAxios({
       method: 'post',
       path: '/auth/register',
       data: {
         email: ( document.getElementById('email-input') as HTMLInputElement ).value,
         username: ( document.getElementById('username-input') as HTMLInputElement ).value,
-        password: ( document.getElementById('password-input') as HTMLInputElement ).value,
-        confirmedPassword: ( document.getElementById('confirm-password-input') as HTMLInputElement ).value,
+        password: passwordValidation().hashedValue,
+        confirmedPassword: passwordValidation().matchedValue,
         displayName: ( document.getElementById('name-input') as HTMLInputElement ).value
       }
     }).then(( res ) => {
