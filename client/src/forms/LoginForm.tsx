@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UseAxios } from "../hooks/UseAxios"
+import CryptoJS from "crypto-js"
 
 export const LoginForm = () => {
   const [ errorMessage, setErrorMessage ]: [string , React.Dispatch<React.SetStateAction<string>>] = useState('')
@@ -8,19 +9,48 @@ export const LoginForm = () => {
 
   const handleLogin = async ( event: FormEvent ) => {
     event.preventDefault()
-    await UseAxios({
+    const userInput = ( document.getElementById( 'user-input' ) as HTMLInputElement ).value
+    const passwordInput = ( document.getElementById( 'password-input' ) as HTMLInputElement ).value
+
+    const decrypt = ( hash: string ) => {
+      const bytes  = CryptoJS.AES.decrypt( hash , `${ process.env.REACT_APP_ENCRYPTION_KEY }` )
+      return bytes.toString( CryptoJS.enc.Utf8 )
+    }
+
+    const findUser = await UseAxios({
       method: 'post',
       path: '/auth/login',
       data: {
-        loginName: (document.getElementById('user-input') as HTMLInputElement).value,
-        password: (document.getElementById('password-input') as HTMLInputElement).value
+        loginName: userInput,
       }
     }).then( res => {
       setErrorMessage( res.data.message )
-      navigate('/')
+      return res.data
     }).catch(( err: any ) => {
       setErrorMessage( err.response.data.message )
     })
+    if ( await findUser !== undefined && await findUser.response === 'PENDING' ) {
+      const loginData = {
+        username: await findUser.user,
+        password: ''
+      }
+      if ( passwordInput === decrypt( await findUser.hash )) {
+        loginData.password = await findUser.hash
+      }
+      else {
+        console.log( await findUser)
+        loginData.password = passwordInput
+      }
+      await UseAxios({
+        method: 'post',
+        path: '/auth/verify-login',
+        data: loginData
+      }).then( res => {
+        navigate('/')
+      }).catch(( err: any ) => {
+        setErrorMessage( err.response.data.message )
+      })
+    }
   }
 
   return (

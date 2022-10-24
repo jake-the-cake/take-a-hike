@@ -9,29 +9,29 @@ import { validatePassword } from '../../validation/validatePassword'
 
 export const ROUTER = Express.Router()
 
+/*
+  ::: Login ( 2 parts )
+*/
 ROUTER.post('/login', async ( req: Request, res: Response ) => {
   consoleLogEndpoints( req.body, req.originalUrl, req.method )
   const data = {
     response: 'FAILURE',
-    message: ''
+    message: '',
+    hash: '',
+    user: ''
   }
   let responseStatus: number = 500
-  let found: boolean = false
-  const { loginName, password } = req.body
+  const { loginName } = req.body
   try {
     const users = await UserModel.find()
     users.forEach(( user ) => {
-      if ( found === false ) {    
+      if ( responseStatus !== 200 ) {    
         if ( user.username === loginName || user.email === loginName ) {
-          found = true
-          if ( password === user.password ) {
-            data.response = 'SUCCESS'
-            responseStatus = 201
-          }
-          else {
-            data.message = 'Invalid password entered'
-            responseStatus = 401
-          }
+          responseStatus = 200
+          data.hash = user.password
+          data.message = ''
+          data.response = 'PENDING'
+          data.user = user.id
         }
         else {
           data.message = 'User does not exist'
@@ -47,6 +47,36 @@ ROUTER.post('/login', async ( req: Request, res: Response ) => {
   res.status( responseStatus ).json( data )
 })
 
+ROUTER.post('/verify-login', async ( req: Request, res: Response ) => {
+  consoleLogEndpoints( req.body, req.originalUrl, req.method )
+  const data = {
+    response: 'FAILURE',
+    message: '',
+  }
+  let responseStatus: number = 500
+  try {
+    const user = await UserModel.findOne({
+      _id: req.body.username
+    })
+    if ( user && user.password === req.body.password ) {
+      responseStatus = 201
+      data.response = 'SUCCESS'
+    }
+    else {
+      responseStatus = 401
+      data.message = 'Invalid password entered.'
+    }
+  }
+  catch ( err: any ) {
+
+  }
+  res.status( responseStatus ).json( data )
+})
+
+
+/*
+  ::: Account registration
+*/
 ROUTER.post('/register', async ( req: Request, res: Response ) => {
   consoleLogEndpoints( req.body, req.originalUrl, req.method )
   const email: ResponseObjectProps = await validateEmailAddress( req.body.email )

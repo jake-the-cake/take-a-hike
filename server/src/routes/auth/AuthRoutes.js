@@ -21,29 +21,29 @@ const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
 const validateUsername_1 = require("../../validation/validateUsername");
 const validatePassword_1 = require("../../validation/validatePassword");
 exports.ROUTER = express_1.default.Router();
+/*
+  ::: Login ( 2 parts )
+*/
 exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const data = {
         response: 'FAILURE',
-        message: ''
+        message: '',
+        hash: '',
+        user: ''
     };
     let responseStatus = 500;
-    let found = false;
-    const { loginName, password } = req.body;
+    const { loginName } = req.body;
     try {
         const users = yield UserModel_1.UserModel.find();
         users.forEach((user) => {
-            if (found === false) {
+            if (responseStatus !== 200) {
                 if (user.username === loginName || user.email === loginName) {
-                    found = true;
-                    if (password === user.password) {
-                        data.response = 'SUCCESS';
-                        responseStatus = 201;
-                    }
-                    else {
-                        data.message = 'Invalid password entered';
-                        responseStatus = 401;
-                    }
+                    responseStatus = 200;
+                    data.hash = user.password;
+                    data.message = '';
+                    data.response = 'PENDING';
+                    data.user = user.id;
                 }
                 else {
                     data.message = 'User does not exist';
@@ -58,6 +58,33 @@ exports.ROUTER.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
     res.status(responseStatus).json(data);
 }));
+exports.ROUTER.post('/verify-login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
+    const data = {
+        response: 'FAILURE',
+        message: '',
+    };
+    let responseStatus = 500;
+    try {
+        const user = yield UserModel_1.UserModel.findOne({
+            _id: req.body.username
+        });
+        if (user && user.password === req.body.password) {
+            responseStatus = 201;
+            data.response = 'SUCCESS';
+        }
+        else {
+            responseStatus = 401;
+            data.message = 'Invalid password entered.';
+        }
+    }
+    catch (err) {
+    }
+    res.status(responseStatus).json(data);
+}));
+/*
+  ::: Account registration
+*/
 exports.ROUTER.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, consoleLogEndpoints_1.consoleLogEndpoints)(req.body, req.originalUrl, req.method);
     const email = yield (0, validateEmailAddress_1.validateEmailAddress)(req.body.email);

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UseAxios } from "../hooks/UseAxios"
-import AES from 'crypto-js/aes'
+import CryptoJS from 'crypto-js'
 
 interface RegistrationFormErrorProps {
   emailError?: string,
@@ -28,7 +28,7 @@ export const RegisterForm = () => {
     const passwordValidation: PasswordValidationProps = () => {
       const originalPassword = ( document.getElementById('password-input') as HTMLInputElement ).value
       const confirmedPassword = ( document.getElementById('confirm-password-input') as HTMLInputElement ).value
-      const hashedPassword = AES.encrypt( originalPassword, process.env.REACT_APP_ENCRYPTION_KEY as string ).toString()
+      const hashedPassword = CryptoJS.AES.encrypt( originalPassword, `${ process.env.REACT_APP_ENCRYPTION_KEY }` ).toString()
       const returnValues = {
         hashedValue: '',
         matchedValue: ''
@@ -49,7 +49,7 @@ export const RegisterForm = () => {
         returnValues.hashedValue = 'x1'
         returnValues.matchedValue = 'x1'
       }
-      else if ( originalPassword.match(/^(-*[\d].*)$/) === null || originalPassword.match(/^(.*[A-Za-z].*)$/) === null ) {
+      else if ( originalPassword.match(/\d/) === null || originalPassword.match(/[A-Za-z]/) === null ) {
         returnValues.hashedValue = 'x'
         returnValues.matchedValue = 'x'
       }
