@@ -7,6 +7,7 @@ import { ResponseObjectProps } from '../../packages/validata/validationProps'
 import { validateUserName } from '../../validation/validateUsername'
 import { validatePassword } from '../../validation/validatePassword'
 import axios from 'axios'
+import { usePublicRequest } from '../../hooks/useAxios'
 
 export const ROUTER = Express.Router()
 
@@ -63,11 +64,21 @@ ROUTER.post('/verify-login', async ( req: Request, res: Response ) => {
     if ( user && user.password === req.body.password ) {
       responseStatus = 201
       data.response = 'SUCCESS'
-      data.token = await axios.post( 'http://localhost:5500/request-token', {
-        login: user.username,
-        password: user.password
-      }).then( res => res.data ).catch(( err ) => console.log( err.message ))
-      console.log( data )
+      data.token = await usePublicRequest({
+        method: 'POST',
+        url: '/request-token',
+        data: {
+            login: user.username,
+            password: user.password
+        },
+        config: ''
+      })
+      .then( res => {
+        return res.data
+      })
+      .catch(( err ) => {
+        returnErrorOnTerminal( err.message )
+      })
     }
     else {
       responseStatus = 401
@@ -75,7 +86,7 @@ ROUTER.post('/verify-login', async ( req: Request, res: Response ) => {
     }
   }
   catch ( err: any ) {
-
+    returnErrorOnTerminal( err.message )
   }
   res.status( responseStatus ).json( data )
 })
