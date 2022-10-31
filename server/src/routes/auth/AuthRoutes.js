@@ -20,6 +20,7 @@ const UserModel_1 = require("../../models/UserModel");
 const validateEmailAddress_1 = require("../../validation/validateEmailAddress");
 const validateUsername_1 = require("../../validation/validateUsername");
 const validatePassword_1 = require("../../validation/validatePassword");
+const axios_1 = __importDefault(require("axios"));
 exports.ROUTER = express_1.default.Router();
 /*
   ::: Login ( 2 parts )
@@ -63,6 +64,7 @@ exports.ROUTER.post('/verify-login', (req, res) => __awaiter(void 0, void 0, voi
     const data = {
         response: 'FAILURE',
         message: '',
+        token: ''
     };
     let responseStatus = 500;
     try {
@@ -72,6 +74,11 @@ exports.ROUTER.post('/verify-login', (req, res) => __awaiter(void 0, void 0, voi
         if (user && user.password === req.body.password) {
             responseStatus = 201;
             data.response = 'SUCCESS';
+            data.token = yield axios_1.default.post('http://localhost:5500/request-token', {
+                login: user.username,
+                password: user.password
+            }).then(res => res.data).catch((err) => console.log(err.message));
+            console.log(data);
         }
         else {
             responseStatus = 401;

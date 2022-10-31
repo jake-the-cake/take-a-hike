@@ -6,6 +6,7 @@ import { validateEmailAddress } from '../../validation/validateEmailAddress'
 import { ResponseObjectProps } from '../../packages/validata/validationProps'
 import { validateUserName } from '../../validation/validateUsername'
 import { validatePassword } from '../../validation/validatePassword'
+import axios from 'axios'
 
 export const ROUTER = Express.Router()
 
@@ -52,6 +53,7 @@ ROUTER.post('/verify-login', async ( req: Request, res: Response ) => {
   const data = {
     response: 'FAILURE',
     message: '',
+    token: ''
   }
   let responseStatus: number = 500
   try {
@@ -61,6 +63,11 @@ ROUTER.post('/verify-login', async ( req: Request, res: Response ) => {
     if ( user && user.password === req.body.password ) {
       responseStatus = 201
       data.response = 'SUCCESS'
+      data.token = await axios.post( 'http://localhost:5500/request-token', {
+        login: user.username,
+        password: user.password
+      }).then( res => res.data ).catch(( err ) => console.log( err.message ))
+      console.log( data )
     }
     else {
       responseStatus = 401

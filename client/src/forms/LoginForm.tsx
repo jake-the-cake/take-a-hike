@@ -38,7 +38,6 @@ export const LoginForm = () => {
         loginData.password = await findUser.hash
       }
       else {
-        console.log( await findUser)
         loginData.password = passwordInput
       }
       await UseAxios({
@@ -46,6 +45,7 @@ export const LoginForm = () => {
         path: '/auth/verify-login',
         data: loginData
       }).then( res => {
+        console.log( res.data )
         navigate('/')
       }).catch(( err: any ) => {
         setErrorMessage( err.response.data.message )
