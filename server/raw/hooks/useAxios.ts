@@ -11,6 +11,7 @@ interface RequestProps {
 // Variables
 const baseURL = 'http://localhost:5500'
 
+// Public requests
 export const usePublicRequest: ( args: RequestProps ) => Promise<any> = async ({ method, url, data = null, config = null }) => {
   const response = await axios({
     method,

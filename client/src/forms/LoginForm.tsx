@@ -13,7 +13,7 @@ export const LoginForm = () => {
     const passwordInput = ( document.getElementById( 'password-input' ) as HTMLInputElement ).value
 
     const decrypt = ( hash: string ) => {
-      const bytes  = CryptoJS.AES.decrypt( hash , `${ process.env.REACT_APP_ENCRYPTION_KEY }` )
+      const bytes  = CryptoJS.AES.decrypt( hash , process.env.REACT_APP_ENCRYPTION_KEY as string )
       return bytes.toString( CryptoJS.enc.Utf8 )
     }
 

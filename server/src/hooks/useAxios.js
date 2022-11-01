@@ -16,6 +16,7 @@ exports.usePublicRequest = void 0;
 const axios_1 = __importDefault(require("axios"));
 // Variables
 const baseURL = 'http://localhost:5500';
+// Public requests
 const usePublicRequest = ({ method, url, data = null, config = null }) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, axios_1.default)({
         method,
