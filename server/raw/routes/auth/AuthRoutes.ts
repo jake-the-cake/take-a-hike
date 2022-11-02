@@ -6,7 +6,6 @@ import { validateEmailAddress } from '../../validation/validateEmailAddress'
 import { ResponseObjectProps } from '../../packages/validata/validationProps'
 import { validateUserName } from '../../validation/validateUsername'
 import { validatePassword } from '../../validation/validatePassword'
-import axios from 'axios'
 import { usePublicRequest } from '../../hooks/useAxios'
 
 export const ROUTER = Express.Router()
