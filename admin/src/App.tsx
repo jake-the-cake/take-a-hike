@@ -2,14 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './App.css'
 import { List } from './components/ListComponent/List'
-import { TestComponent } from './components/Test'
 
 const App = () => {
   return (
     <>
-      <h1>You've arrived</h1>
-      <TestComponent />
-      <List />
+      <List title='I did not give A title' data={ [
+        {
+          test: 'fake data'
+        }
+      ] } />
     </>
   )
 }
