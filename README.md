@@ -13,7 +13,11 @@ There is currently no live demo version available.
 ### Roadmap:
 - [ ] admin panel
 - [ ] authorization server
-- [ ] api server 
+  - [ ] refresh token
+- [ ] api server
+  - [ ] events routes
+    - [ ] update event
+    - [ ] add attendees
 - [ ] database models
 - [ ] frontend application
   - [x] ~~create base layout with navigation and main card~~
