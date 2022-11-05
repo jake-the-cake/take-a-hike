@@ -19,6 +19,7 @@
     "http-server": "^14.1.1"
   },
   "scripts": {
-    "build": "esbuild src/App.tsx --bundle --minify --outfile=public/dist/bundle.min.js"
+    "build": "esbuild src/App.tsx --bundle --minify --outfile=public/dist/bundle.min.js",
+    "dev": "http-server"
   }
 }

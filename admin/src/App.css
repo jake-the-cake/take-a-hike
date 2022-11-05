@@ -7,6 +7,7 @@
   --darker: #161616;
   --light: #eaeaea;
   --lighter: #f1f1f1;
+  --yellow: hsl(50 100% 60% / 1);
 }
 
 * {

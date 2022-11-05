@@ -32,8 +32,9 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, format, confi
   }
 
   // TEMP DISABLE CUSTOM TITLES BELOW
-  config.columnTitles = []
+  // config.columnTitles = []
   
+  // Refactor this
   const UseAxios: () => Promise<void> = async () => {
     const { data }: { data: any[] } = await axios({
       method: 'GET',
@@ -48,22 +49,29 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, format, confi
     if ( data.length !== 0 ) setListData( data )
   }
 
+  const ignoreColumns = [
+    '__v',
+    'nickname'
+  ]
+
   useEffect(() => {
     if ( listData.length === 0 ) UseAxios()
     else {
       const columns: any[] = []
       Object.keys( listData[0] ).forEach( key => {
-        if ( key !== '__v' ) columns.push({ title: key, name: key })
+        if ( ignoreColumns.filter( title => title === key ).length === 0 ) columns.push({ title: key, name: key })
       })
+      // Check for custom titles
       if ( config?.columnTitles.length !== 0 ) columns.forEach(( col, index ) => {
         if ( index < config!.columnTitles.length ) {
-          columns[ index ].title = config?.columnTitles[ index ]
+          if ( config?.columnTitles[ index ] !== '' ) columns[ index ].title = config?.columnTitles[ index ]
         }
       })
-      columns.forEach(( column, index ) => {
+      // Format column titles
+      columns.forEach(( column: any, index: number ) => {
         columns[ index ].title = column.title.replace( '_', '' )
         const splitTitle = column.title.split( '' )
-        splitTitle.forEach(( letter, idx ) => {
+        splitTitle.forEach(( letter: string, idx: number ) => {
           if ( letter.match(/^[A-Z]$/) ) splitTitle[ idx ] = ' ' + letter
         })
         splitTitle[ 0 ] = splitTitle [ 0 ].toUpperCase()

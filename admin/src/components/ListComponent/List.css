@@ -21,8 +21,10 @@
 }
 
 .list__header--cell {
-  padding: .5rem;
+  padding: .2rem .5rem;
   flex: 1;
+  color: var(--yellow);
+  font-size: .8rem;
 }
 
 .list__row {

@@ -9,7 +9,7 @@ const App = () => {
 
   return (
     <React.StrictMode>
-      <List title='Users' config={{ columnTitles: ['one','more','column name']}} />
+      <List title='Users' config={{ columnTitles: ['one','','column name']}} />
     </React.StrictMode>
   )
 }
