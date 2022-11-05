@@ -14,15 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ROUTER = void 0;
 const express_1 = __importDefault(require("express"));
-const UserModel_1 = require("../../models/UserModel");
+const EventModel_1 = require("../../models/EventModel");
 const basicResponses_1 = require("../basicResponses");
 exports.ROUTER = express_1.default.Router();
+const model = EventModel_1.EventModel;
 exports.ROUTER.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield UserModel_1.UserModel.find();
-    res.status(200).json({ data });
+    const data = yield model.find();
+    res.status(200).json({
+        data
+    });
 }));
 exports.ROUTER.get('/:id', (req, res) => {
-    (0, basicResponses_1.actionById)({ _id: req.params.id, model: UserModel_1.UserModel, action: 'find' })
+    (0, basicResponses_1.actionById)({ _id: req.params.id, model, action: 'find' })
         .then(r => {
         res.status(r.statusCode).json(r.response);
     })
@@ -30,12 +33,24 @@ exports.ROUTER.get('/:id', (req, res) => {
         res.status(500).json(err.message);
     });
 });
-exports.ROUTER.delete('/remove/:id', (req, res) => {
-    (0, basicResponses_1.actionById)({ _id: req.params.id, model: UserModel_1.UserModel, action: 'remove' })
-        .then(r => {
+exports.ROUTER.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newEvent = new model({
+        title: req.body.title,
+        description: req.body.description || 'No description added yet.',
+        location: req.body.location,
+        datetime: req.body.datetime,
+        createdBy: req.body.createdBy,
+        attendees: req.body.attendees || []
+    });
+    newEvent.save();
+    res.status(201).json(newEvent);
+}));
+exports.ROUTER.delete('/remove/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, basicResponses_1.actionById)({ _id: req.params.id, model, action: 'remove' })
+        .then((r) => {
         res.status(r.statusCode).json(r.response);
     })
         .catch(err => {
         res.status(500).json(err.message);
     });
-});
+}));

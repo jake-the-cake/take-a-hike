@@ -9,7 +9,16 @@ const App = () => {
 
   return (
     <React.StrictMode>
-      <List title='Users' config={{ columnTitles: ['one','','column name']}} />
+      <List
+        title='Users'
+        api='users'
+        //config={{ columnTitles: ['one','','column name']}}
+      />
+      <List
+        title='Events'
+        api='events'
+        //config={{ columnTitles: ['one','','column name']}}
+      />
     </React.StrictMode>
   )
 }

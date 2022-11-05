@@ -5,22 +5,29 @@ import cors from 'cors'
 import { returnErrorOnTerminal } from './common/consoleLogTerminal'
 import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
 import { ROUTER as UserRouter } from './routes/users/UserRoutes'
+import { ROUTER as EventRouter } from './routes/events/EventRoutes'
 import { consoleLogEndpoints } from './common/consoleLogEndpoints'
 
 const APP = Express()
 const DEFAULT_PORT: number = 4201
 dotenv.config()
 
-APP.use(Express.json())
-APP.use(Express.urlencoded({ extended: false }))
-APP.use(cors())
+APP.use( Express.json() )
+APP.use( Express.urlencoded({ extended: false }))
+APP.use( cors() )
 
-APP.use('/auth', AuthRouter)
-APP.use('/users', UserRouter)
+// Server log middleware
+APP.use (( req, res, next ) => {
+  consoleLogEndpoints( req.body, req.originalUrl, req.method )
+  next()
+})
+
+APP.use( '/auth', AuthRouter )
+APP.use( '/users', UserRouter )
+APP.use( '/events', EventRouter )
 
 APP.get('/', ( req: any, res: any ) => {
-  consoleLogEndpoints( req.body, req.originalUrl, req.method )
-  res.status(200).json({
+  res.status( 200 ).json({
     response: 'You have found my API!'
   })
 })
@@ -29,8 +36,7 @@ APP.get('/', ( req: any, res: any ) => {
   ::: 404 on any bad routes
 */
 APP.get('/*', ( req: any, res: any ) => {
-  consoleLogEndpoints( req.body, req.originalUrl, req.method )
-  res.status(404).json({ error: 'page not found' })
+  res.status( 404 ).json({ error: 'page not found' })
 })
 
 /*
@@ -39,7 +45,7 @@ APP.get('/*', ( req: any, res: any ) => {
 Mongoose
   .connect(process.env.DATABASE_ACCESS || '')
   .then(() => {
-    console.log('Database connection established')
+    console.log( 'Database connection established' )
   })
   .catch(( err: Error ) => {
     returnErrorOnTerminal( err.message )

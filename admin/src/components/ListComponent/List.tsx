@@ -8,16 +8,17 @@ interface ListFormatProps {
 }
 
 interface ListConfigProps {
-  columnTitles: string[]
+  columnTitles?: string[]
 }
 
 interface ListProps {
   title: string,
+  api: string,
   format?: ListFormatProps,
   config?: ListConfigProps
 }
 
-export const List: ( props: ListProps ) => JSX.Element = ({ title, format, config }) => {
+export const List: ( props: ListProps ) => JSX.Element = ({ title, api, format, config }) => {
   // State variables
   const [ listData, setListData ]: [ any[], any ] = useState( [] )
   const [ listColumns, setListColumns ]: [ any[], any ] = useState( [] )
@@ -27,18 +28,19 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, format, confi
       maxLines: 10,
       paginate: false
   }
-  if ( !config ) config = {
-    columnTitles: []
+  if ( !config?.columnTitles ) config = {
+    columnTitles: [], ...config
   }
 
   // TEMP DISABLE CUSTOM TITLES BELOW
-  // config.columnTitles = []
+  config.columnTitles = []
   
   // Refactor this
   const UseAxios: () => Promise<void> = async () => {
+    const baseURL = 'http://localhost:4200'
     const { data }: { data: any[] } = await axios({
       method: 'GET',
-      url: 'http://localhost:4200/users/all'
+      url: `${ baseURL }/${ api }/all`
     })
     .then( res => {
       return res.data
@@ -62,9 +64,9 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, format, confi
         if ( ignoreColumns.filter( title => title === key ).length === 0 ) columns.push({ title: key, name: key })
       })
       // Check for custom titles
-      if ( config?.columnTitles.length !== 0 ) columns.forEach(( col, index ) => {
-        if ( index < config!.columnTitles.length ) {
-          if ( config?.columnTitles[ index ] !== '' ) columns[ index ].title = config?.columnTitles[ index ]
+      if ( config!.columnTitles!.length !== 0 ) columns.forEach(( col, index ) => {
+        if ( index < config!.columnTitles!.length ) {
+          if ( config!.columnTitles![ index ] !== '' ) columns[ index ].title = config!.columnTitles![ index ]
         }
       })
       // Format column titles
@@ -95,23 +97,29 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, format, confi
         <span className='list__title--text'>{ title }</span>
       </div>
       <div className='list__header--container'>
-        { listColumns.map(( item, index ) => (
-          <div key={ `${ title }-header-cell-${ index }` } className='list__header--cell'>{ item.title }</div>
-        ))}
+        { // display column titles
+          listColumns.map(( item, index ) => (
+            <div key={ `${ title }-header-cell-${ index }` } className='list__header--cell'>{ item.title }</div>
+          ))
+        }
       </div>
-      {
-        listData.map(( item, index ) => (
-          <div key={ `${ title }-row-${ index }` } className='list__row'>
-            {
-              listColumns.map(( col ) => (
-                <div className='list__row--cell'>
-                  { formatDates( item, col.name )}
-                </div>
-              ))
-            }
-          </div>
-        ))
+
+      { // display data or 'no data' message
+        listData.length > 0
+        ? listData.map(( item, index ) => (
+            <div key={ `${ title }-row-${ index }` } className='list__row'>
+              {
+                listColumns.map(( col ) => (
+                  <div className='list__row--cell'>
+                    { formatDates( item, col.name )}
+                  </div>
+                ))
+              }
+            </div>
+          ))
+        : <div className='list__row'>No data.</div>  
       }
+
     </div>
   )
 }
