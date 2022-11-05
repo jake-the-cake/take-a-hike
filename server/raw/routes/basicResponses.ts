@@ -16,33 +16,33 @@ export const actionById = async ({ _id, model, action }: BasicResponseProps ) =>
   const response: ResponseObjectProps = {}
   let data: object = {}
   let statusCode: number = 500
-  let messagePrefix = '[ message prefix ]'
+  let actionWord = '[ message prefix ]'
   try {
     switch ( action ) {
       case 'remove':
         await model.findByIdAndDelete(_id)
-        messagePrefix = 'Removed'
+        actionWord = 'removed'
         break
       case 'update':
         await model.findByIdAndUpdate(_id)
-        messagePrefix = 'Updated'
+        actionWord = 'updated'
         break
       case 'find':
         response.data = await model.findById(_id)
-        messagePrefix = 'Found'
+        actionWord = 'found'
         statusCode = 200
         break
       default:
         break
     }
     response.status = 'SUCCESS'
-    response.message = `${ messagePrefix } _id: ${ _id }`
+    response.message = `Provided ID (${ _id }) has been ${ actionWord }.`
     statusCode !== 200 ? statusCode = 201 : statusCode
   }
   catch ( err: any ) {
     console.log( err.message )
     response.status = 'ERROR',
-    response.message = `Provided _id (${ _id }) cannot be found.`
+    response.message = `Provided ID (${ _id }) cannot be found.`
     statusCode = 401
   }
   return {

@@ -71,24 +71,29 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, api, format, 
       })
       // Format column titles
       columns.forEach(( column: any, index: number ) => {
-        columns[ index ].title = column.title.replace( '_', '' )
-        const splitTitle = column.title.split( '' )
-        splitTitle.forEach(( letter: string, idx: number ) => {
-          if ( letter.match(/^[A-Z]$/) ) splitTitle[ idx ] = ' ' + letter
-        })
-        splitTitle[ 0 ] = splitTitle [ 0 ].toUpperCase()
-        columns[ index ].title = splitTitle.join( '' )
+        if ( column.name !== '_id' ) {
+          columns[ index ].title = column.title.replace( '_', '' )
+          const splitTitle = column.title.split( '' )
+          splitTitle.forEach(( letter: string, idx: number ) => {
+            if ( letter.match(/^[A-Z]$/) ) splitTitle[ idx ] = ' ' + letter
+          })
+          splitTitle[ 0 ] = splitTitle [ 0 ].toUpperCase()
+          columns[ index ].title = splitTitle.join( '' )
+        }
+        else columns[ index ].title = 'ID'
       })
       setListColumns( columns )
     }
     return () => { return }
   }, [ listData ])
 
-  const formatDates = ( item: any, name: string ) => {
-    if ( name === 'createdAt' || name === 'updatedAt' ) {
-      return `${ new Date(item[ name ]).toDateString() } @ ${ new Date( item[ name ]).toLocaleTimeString() }`
+  const formatSpecialFields = ( item: any, name: string ) => {
+    if ( name === 'createdAt' || name === 'updatedAt' || name === 'datetime' ) {
+      if ( new Date( item[ name ]).toString() !== 'Invalid Date' ) {
+        return `${ new Date(item[ name ]).toDateString() } @ ${ new Date( item[ name ]).toLocaleTimeString() }`
+      }
     }
-    else return item[ name ]
+    return item[ name ]
   }
 
   return (
@@ -111,7 +116,7 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, api, format, 
               {
                 listColumns.map(( col ) => (
                   <div className='list__row--cell'>
-                    { formatDates( item, col.name )}
+                    { formatSpecialFields( item, col.name )}
                   </div>
                 ))
               }
