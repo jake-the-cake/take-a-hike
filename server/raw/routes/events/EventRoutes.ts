@@ -29,15 +29,19 @@ ROUTER.patch( '/update/attendees/:id', ( req, res ) => {
     model,
     action: 'find',
     cb: ( object, action = req.body.action ) => {
+      const items = object.attendees
+      const reqItem = req.body.attendee
       switch ( action ) {
         case 'add':
-          object.attendees.push( req.body.attendee )
+          if ( items.filter(( attendee: any ) => attendee.toString() === reqItem ).length === 0 ) {
+            items.push( reqItem )
+          }
           break
         case 'remove':
-          object.attendees = object.attendees.filter(( attendee: any ) => attendee.toString() !== req.body.attendee )
+          object.attendees = items.filter(( attendee: any ) => attendee.toString() !== reqItem )
           break
         case 'clear':
-          object.attendees = []
+          object.attendees = items.slice( 0, 0 )
           break
         default:
           break      
