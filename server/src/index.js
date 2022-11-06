@@ -12,6 +12,8 @@ const AuthRoutes_1 = require("./routes/auth/AuthRoutes");
 const UserRoutes_1 = require("./routes/users/UserRoutes");
 const EventRoutes_1 = require("./routes/events/EventRoutes");
 const consoleLogEndpoints_1 = require("./common/consoleLogEndpoints");
+const goat_clogger_1 = __importDefault(require("goat-clogger"));
+goat_clogger_1.default;
 const APP = (0, express_1.default)();
 const DEFAULT_PORT = 4201;
 dotenv_1.default.config();

@@ -18,30 +18,31 @@ export const actionById = async ({ _id, model, action, cb }: BasicResponseProps 
     status: 'PENDING'
   }
   let statusCode: number = 500
-  let actionWord = '[ message prefix ]'
+  let actionWord = '[ message action ]'
   try {
     switch ( action ) {
-      case 'remove':
-        await model.findByIdAndDelete(_id)
-        actionWord = 'removed'
-        break
-      case 'update':
-        response.data = await model.findByIdAndUpdate(_id)
-        cb && cb( response.data )
-        actionWord = 'updated'
-        break
       case 'find':
-        response.data = await model.findById(_id)
+        response.data = await model.findById( _id )
         cb && cb( response.data )
         actionWord = 'found'
-        statusCode = 200
+        cb ? statusCode = 201 : statusCode = 200
+        break
+      case 'update':
+        response.data = await model.findByIdAndUpdate( _id )
+        cb && cb( response.data )
+        actionWord = 'updated'
+        statusCode = 201
+        break
+      case 'remove':
+        await model.findByIdAndDelete( _id )
+        actionWord = 'removed'
+        statusCode = 201
         break
       default:
         break
     }
     response.status = 'SUCCESS'
     response.message = `Provided ID (${ _id }) has been ${ actionWord }.`
-    statusCode !== 200 ? statusCode = 201 : statusCode
   }
   catch ( err: any ) {
     console.log( err.message )

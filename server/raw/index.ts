@@ -7,11 +7,13 @@ import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
 import { ROUTER as UserRouter } from './routes/users/UserRoutes'
 import { ROUTER as EventRouter } from './routes/events/EventRoutes'
 import { consoleLogEndpoints } from './common/consoleLogEndpoints'
+import clg from 'goat-clogger'
+clg
+
 
 const APP = Express()
 const DEFAULT_PORT: number = 4201
 dotenv.config()
-
 APP.use( Express.json() )
 APP.use( Express.urlencoded({ extended: false }))
 APP.use( cors() )

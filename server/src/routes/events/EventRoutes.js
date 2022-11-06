@@ -39,8 +39,7 @@ exports.ROUTER.patch('/update/attendees/:id', (req, res) => {
         model,
         action: 'find',
         cb: (object, action = req.body.action) => {
-            const items = object.attendees;
-            const reqItem = req.body.attendee;
+            const [items, reqItem] = [object.attendees, req.body.attendee];
             switch (action) {
                 case 'add':
                     if (items.filter((attendee) => attendee.toString() === reqItem).length === 0) {

@@ -15,30 +15,31 @@ const actionById = ({ _id, model, action, cb }) => __awaiter(void 0, void 0, voi
         status: 'PENDING'
     };
     let statusCode = 500;
-    let actionWord = '[ message prefix ]';
+    let actionWord = '[ message action ]';
     try {
         switch (action) {
-            case 'remove':
-                yield model.findByIdAndDelete(_id);
-                actionWord = 'removed';
+            case 'find':
+                response.data = yield model.findById(_id);
+                cb && cb(response.data);
+                actionWord = 'found';
+                cb ? statusCode = 201 : statusCode = 200;
                 break;
             case 'update':
                 response.data = yield model.findByIdAndUpdate(_id);
                 cb && cb(response.data);
                 actionWord = 'updated';
+                statusCode = 201;
                 break;
-            case 'find':
-                response.data = yield model.findById(_id);
-                cb && cb(response.data);
-                actionWord = 'found';
-                statusCode = 200;
+            case 'remove':
+                yield model.findByIdAndDelete(_id);
+                actionWord = 'removed';
+                statusCode = 201;
                 break;
             default:
                 break;
         }
         response.status = 'SUCCESS';
         response.message = `Provided ID (${_id}) has been ${actionWord}.`;
-        statusCode !== 200 ? statusCode = 201 : statusCode;
     }
     catch (err) {
         console.log(err.message);
