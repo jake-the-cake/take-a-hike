@@ -10,9 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.actionById = void 0;
-const actionById = ({ _id, model, action }) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = {};
-    let data = {};
+const actionById = ({ _id, model, action, cb }) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = {
+        status: 'PENDING'
+    };
     let statusCode = 500;
     let actionWord = '[ message prefix ]';
     try {
@@ -22,11 +23,13 @@ const actionById = ({ _id, model, action }) => __awaiter(void 0, void 0, void 0,
                 actionWord = 'removed';
                 break;
             case 'update':
-                yield model.findByIdAndUpdate(_id);
+                response.data = yield model.findByIdAndUpdate(_id);
+                cb && cb(response.data);
                 actionWord = 'updated';
                 break;
             case 'find':
                 response.data = yield model.findById(_id);
+                cb && cb(response.data);
                 actionWord = 'found';
                 statusCode = 200;
                 break;

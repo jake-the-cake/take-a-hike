@@ -17,12 +17,17 @@ const express_1 = __importDefault(require("express"));
 const UserModel_1 = require("../../models/UserModel");
 const basicResponses_1 = require("../basicResponses");
 exports.ROUTER = express_1.default.Router();
+const model = UserModel_1.UserModel;
 exports.ROUTER.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield UserModel_1.UserModel.find();
+    const data = yield model.find();
     res.status(200).json({ data });
 }));
 exports.ROUTER.get('/:id', (req, res) => {
-    (0, basicResponses_1.actionById)({ _id: req.params.id, model: UserModel_1.UserModel, action: 'find' })
+    (0, basicResponses_1.actionById)({
+        _id: req.params.id,
+        model,
+        action: 'find'
+    })
         .then(r => {
         res.status(r.statusCode).json(r.response);
     })
@@ -31,7 +36,9 @@ exports.ROUTER.get('/:id', (req, res) => {
     });
 });
 exports.ROUTER.delete('/remove/:id', (req, res) => {
-    (0, basicResponses_1.actionById)({ _id: req.params.id, model: UserModel_1.UserModel, action: 'remove' })
+    (0, basicResponses_1.actionById)({
+        _id: req.params.id, model, action: 'remove'
+    })
         .then(r => {
         res.status(r.statusCode).json(r.response);
     })

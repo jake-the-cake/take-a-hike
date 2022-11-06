@@ -21,11 +21,13 @@ const Event = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    attendees: {
-        type: Array
-    },
+    attendees: [{
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
     createdBy: {
         type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     }
 }, { timestamps: true });

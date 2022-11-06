@@ -3,18 +3,20 @@ import Mongoose from 'mongoose'
 interface BasicResponseProps {
   _id: any,
   model: Mongoose.Model<any>,
-  action: string
+  action: string,
+  cb?: ( object: any ) => void
 }
 
 interface ResponseObjectProps {
   status?: string,
   message?: string,
-  data?: Promise<any>
+  data?: Promise<any>,
 }
 
-export const actionById = async ({ _id, model, action }: BasicResponseProps ) => {
-  const response: ResponseObjectProps = {}
-  let data: object = {}
+export const actionById = async ({ _id, model, action, cb }: BasicResponseProps ) => {
+  const response: ResponseObjectProps = {
+    status: 'PENDING'
+  }
   let statusCode: number = 500
   let actionWord = '[ message prefix ]'
   try {
@@ -24,11 +26,13 @@ export const actionById = async ({ _id, model, action }: BasicResponseProps ) =>
         actionWord = 'removed'
         break
       case 'update':
-        await model.findByIdAndUpdate(_id)
+        response.data = await model.findByIdAndUpdate(_id)
+        cb && cb( response.data )
         actionWord = 'updated'
         break
       case 'find':
         response.data = await model.findById(_id)
+        cb && cb( response.data )
         actionWord = 'found'
         statusCode = 200
         break

@@ -53,7 +53,6 @@ export const List: ( props: ListProps ) => JSX.Element = ({ title, api, format, 
 
   const ignoreColumns = [
     '__v',
-    'nickname'
   ]
 
   useEffect(() => {

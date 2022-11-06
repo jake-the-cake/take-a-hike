@@ -33,6 +33,35 @@ exports.ROUTER.get('/:id', (req, res) => {
         res.status(500).json(err.message);
     });
 });
+exports.ROUTER.patch('/update/attendees/:id', (req, res) => {
+    (0, basicResponses_1.actionById)({
+        _id: req.params.id,
+        model,
+        action: 'find',
+        cb: (object, action = req.body.action) => {
+            switch (action) {
+                case 'add':
+                    object.attendees.push(req.body.attendee);
+                    break;
+                case 'remove':
+                    object.attendees = object.attendees.filter((attendee) => attendee.toString() !== req.body.attendee);
+                    break;
+                case 'clear':
+                    object.attendees = [];
+                    break;
+                default:
+                    break;
+            }
+            object.save();
+        }
+    })
+        .then(r => {
+        res.status(r.statusCode).json(r.response);
+    })
+        .catch(err => {
+        res.status(500).json(err.message);
+    });
+});
 exports.ROUTER.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newEvent = new model({
         title: req.body.title,

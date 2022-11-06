@@ -16,11 +16,13 @@ const Event = new Mongoose.Schema({
     type: String,
     required: true
   },
-  attendees: {
-    type: Array
-  },
+  attendees: [{
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   createdBy: {
     type: Mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   }
 }, { timestamps: true })

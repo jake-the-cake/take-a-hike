@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import axios from 'axios'
 import './App.css'
 import { List } from './components/ListComponent/List'
 
