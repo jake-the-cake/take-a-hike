@@ -6,6 +6,7 @@ import { returnErrorOnTerminal } from './common/consoleLogTerminal'
 import { ROUTER as AuthRouter } from './routes/auth/AuthRoutes'
 import { ROUTER as UserRouter } from './routes/users/UserRoutes'
 import { ROUTER as EventRouter } from './routes/events/EventRoutes'
+import { ROUTER as TrailRouter } from './routes/trails/TrailRoutes'
 import { consoleLogEndpoints } from './common/consoleLogEndpoints'
 import clg from 'goat-clogger'
 clg
@@ -27,6 +28,7 @@ APP.use (( req, res, next ) => {
 APP.use( '/auth', AuthRouter )
 APP.use( '/users', UserRouter )
 APP.use( '/events', EventRouter )
+APP.use( '/trails', TrailRouter )
 
 APP.get('/', ( req: any, res: any ) => {
   res.status( 200 ).json({

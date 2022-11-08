@@ -11,6 +11,7 @@ const consoleLogTerminal_1 = require("./common/consoleLogTerminal");
 const AuthRoutes_1 = require("./routes/auth/AuthRoutes");
 const UserRoutes_1 = require("./routes/users/UserRoutes");
 const EventRoutes_1 = require("./routes/events/EventRoutes");
+const TrailRoutes_1 = require("./routes/trails/TrailRoutes");
 const consoleLogEndpoints_1 = require("./common/consoleLogEndpoints");
 const goat_clogger_1 = __importDefault(require("goat-clogger"));
 goat_clogger_1.default;
@@ -28,6 +29,7 @@ APP.use((req, res, next) => {
 APP.use('/auth', AuthRoutes_1.ROUTER);
 APP.use('/users', UserRoutes_1.ROUTER);
 APP.use('/events', EventRoutes_1.ROUTER);
+APP.use('/trails', TrailRoutes_1.ROUTER);
 APP.get('/', (req, res) => {
     res.status(200).json({
         response: 'You have found my API!'

@@ -117,11 +117,11 @@ class StringValidation {
             case 'lower':
                 characterString += 'a-z';
                 break;
-            case 'all':
-                characterString += 'A-Za-z0-9';
-                break;
             case 'digit':
                 characterString += '0-9';
+                break;
+            case 'all':
+                characterString += 'A-Za-z0-9';
                 break;
             default:
                 break;

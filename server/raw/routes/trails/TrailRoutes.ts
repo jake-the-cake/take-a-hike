@@ -1,15 +1,16 @@
 import Express, { Request, Response } from 'express'
-import { EventModel } from '../../models/EventModel'
+import { TrailModel } from '../../models/TrailModel'
 import { actionById } from '../basicResponses'
 
 export const ROUTER = Express.Router()
-const model = EventModel
+const model = TrailModel
 
 ROUTER.get( '/all', async ( req: Request, res: Response ) => {
   const data = await model.find()
+  if ( data.length === 0 ) data.push( 'no data here, dude.' )
   res.status(200).json({
     data
-  })
+  } || 'nothing')
 })
 
 ROUTER.get( '/:id', ( req, res ) => {
