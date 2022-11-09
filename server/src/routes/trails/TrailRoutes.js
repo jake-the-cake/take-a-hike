@@ -20,6 +20,7 @@ exports.ROUTER = express_1.default.Router();
 const model = TrailModel_1.TrailModel;
 exports.ROUTER.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield model.find();
+    console.log(data.length);
     if (data.length === 0)
         data.push('no data here, dude.');
     res.status(200).json({

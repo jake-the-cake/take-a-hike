@@ -8,9 +8,6 @@ import { ROUTER as UserRouter } from './routes/users/UserRoutes'
 import { ROUTER as EventRouter } from './routes/events/EventRoutes'
 import { ROUTER as TrailRouter } from './routes/trails/TrailRoutes'
 import { consoleLogEndpoints } from './common/consoleLogEndpoints'
-import clg from 'goat-clogger'
-clg
-
 
 const APP = Express()
 const DEFAULT_PORT: number = 4201

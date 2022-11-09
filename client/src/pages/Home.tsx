@@ -1,4 +1,5 @@
 import { MainCard } from "../components/MainCard/MainCard"
+import { EventForm } from "../forms/EventForm"
 import { findAHikeWidget } from "../objects/sideComponentObjects"
 
 interface HomeProps {
@@ -12,7 +13,7 @@ export const Home: HomeProps = () => {
       subtitle="this is where a small blob of text can go"
       content={
         <div>
-          ?
+          <EventForm />
         </div>
       }
       components={[
