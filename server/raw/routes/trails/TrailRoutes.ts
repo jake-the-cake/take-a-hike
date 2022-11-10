@@ -6,9 +6,7 @@ export const ROUTER = Express.Router()
 const model = TrailModel
 
 ROUTER.get( '/all', async ( req: Request, res: Response ) => {
-  const data: any = await model.find()
-  console.log( data.length )
-  if ( data.length === 0 ) data.push( 'no data here, dude.' )
+  const data = await model.find()
   res.status(200).json({
     data
   } || 'nothing')

@@ -16,7 +16,10 @@ const App = () => {
       <List
         title='Events'
         api='events'
-        //config={{ columnTitles: ['one','','column name']}}
+      />
+      <List
+        title='Trails'
+        api='trails'
       />
     </React.StrictMode>
   )
