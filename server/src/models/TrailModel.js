@@ -8,7 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const Trail = new mongoose_1.default.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     marker: {
         color: String,

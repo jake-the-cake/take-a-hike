@@ -67,12 +67,10 @@ exports.ROUTER.patch('/update/attendees/:id', (req, res) => {
 });
 exports.ROUTER.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newEvent = new model({
-        title: req.body.title,
-        description: req.body.description || 'No description added yet.',
         location: req.body.location,
-        datetime: req.body.datetime,
-        createdBy: req.body.createdBy,
-        attendees: req.body.attendees || []
+        name: req.body.name,
+        trailType: req.body.trailType,
+        marker: req.body.marker
     });
     newEvent.save();
     res.status(201).json(newEvent);

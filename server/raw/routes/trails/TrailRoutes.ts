@@ -57,12 +57,10 @@ ROUTER.patch( '/update/attendees/:id', ( req, res ) => {
 
 ROUTER.post( '/add', async ( req, res ) => {
   const newEvent = new model({
-    title: req.body.title,
-    description: req.body.description || 'No description added yet.',
     location: req.body.location,
-    datetime: req.body.datetime,
-    createdBy: req.body.createdBy,
-    attendees: req.body.attendees || []
+    name: req.body.name,
+    trailType: req.body.trailType,
+    marker: req.body.marker
   })
   newEvent.save()
   res.status( 201 ).json( newEvent )

@@ -3,7 +3,7 @@ import Mongoose from 'mongoose'
 const Trail = new Mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   marker: {
     color: String,
