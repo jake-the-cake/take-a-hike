@@ -23,7 +23,7 @@ export const EventForm = () => {
         <input type="text" id='location-input' />
       </div>
       <button>
-        Add Your Event
+        Continue
       </button>
     </form>
   )

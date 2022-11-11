@@ -1,9 +1,13 @@
+import { MainCard } from "../../components/MainCard/MainCard"
 import { EventForm } from "../../forms/EventForm"
 
 export const AddEvent = () => {
   return (
-    <>
-      <EventForm />
-    </>
+    <MainCard
+      title="Events"
+      content={
+        <EventForm />
+      }
+    />
   )
 }

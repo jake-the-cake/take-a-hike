@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { TitleBar } from './components/TitleBar/TitleBar'
+import { AddEvent } from './pages/events/AddEvent'
 import { Find } from './pages/Find'
 import { Hikes } from './pages/hikes/Hikes'
 import { Home } from './pages/Home'
@@ -45,6 +46,14 @@ function App() {
         </Route>
         <Route path='/login' element={ <Login /> } />
         <Route path='hikes' >
+          <Route path='' element={ <Hikes /> } />
+          <Route path='find' element={ <Find /> } />
+          <Route path='popular' element={ <>Popular hikes</> } />
+        </Route>
+        <Route path='events' >
+          <Route path='' element={ <AddEvent /> } />
+        </Route>
+        <Route path='trails' >
           <Route path='' element={ <Hikes /> } />
           <Route path='find' element={ <Find /> } />
           <Route path='popular' element={ <>Popular hikes</> } />
